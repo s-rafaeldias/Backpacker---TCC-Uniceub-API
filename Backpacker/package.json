@@ -1,0 +1,32 @@
+{
+  "name": "backpacker",
+  "version": "1.0.0",
+  "description": "Aplicativo para viajantes",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BadaroThiago/Backpacker---TCC-Uniceub.git"
+  },
+  "keywords": [
+    "viagem",
+    "viajar",
+    "organizar",
+    "mochilao"
+  ],
+  "author": "Felipe Fontes, Lucas Almeida, Sarah Maranhao, Rafael Silveira, Thiago Oliveira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BadaroThiago/Backpacker---TCC-Uniceub/issues"
+  },
+  "homepage": "https://github.com/BadaroThiago/Backpacker---TCC-Uniceub#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "mysql2": "^2.2.5",
+    "sequelize": "^6.5.1"
+  }
+}
