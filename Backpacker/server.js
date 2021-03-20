@@ -10,9 +10,6 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-const app = express();
-app.use(...);
-
 const db = require("./app/models");
 db.sequelize.sync();
 
