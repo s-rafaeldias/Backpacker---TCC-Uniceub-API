@@ -1,3 +1,3 @@
 node_modules
 package-lock.json
-/Backpacker/app/config/db.config.js
+Backpacker/app/config/db.config.js
