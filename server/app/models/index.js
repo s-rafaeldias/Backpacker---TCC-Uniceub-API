@@ -1,16 +1,16 @@
-const dbConfig = require("../config/db.config.js");
+import cfg from "../config/db.config.js";
 
-const Sequelize = require("sequelize");
-const sequelize = new Sequelize(dbConfig.DB, dbConfig.USER, dbConfig.PASSWORD, {
-  host: dbConfig.HOST,
-  dialect: dbConfig.dialect,
+import Sequelize from "sequelize";
+const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
+  host: cfg.HOST,
+  dialect: cfg.dialect,
   operatorsAliases: false,
 
   pool: {
-    max: dbConfig.pool.max,
-    min: dbConfig.pool.min,
-    acquire: dbConfig.pool.acquire,
-    idle: dbConfig.pool.idle
+    max: cfg.pool.max,
+    min: cfg.pool.min,
+    acquire: cfg.pool.acquire,
+    idle: cfg.pool.idle
   }
 });
 
@@ -19,7 +19,7 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
+// db.tutorials = require("./tutorial.model.js")(sequelize, Sequelize);
 
-module.exports = db;
+export default db;
 

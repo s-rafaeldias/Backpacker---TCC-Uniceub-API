@@ -3,7 +3,9 @@
   "version": "1.0.0",
   "description": "Aplicativo para viajantes",
   "main": "server.js",
+  "type": "module",
   "scripts": {
+    "devWin": "set DEBUG=* & nodemon",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -26,7 +28,11 @@
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "firebase": "^8.3.1",
     "mysql2": "^2.2.5",
     "sequelize": "^6.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
   }
 }
