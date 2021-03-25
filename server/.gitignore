@@ -1,4 +1,4 @@
-app/config/*
+app
 ../.vscode
 node_modules
 package-lock.json
