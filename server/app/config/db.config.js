@@ -1,8 +1,8 @@
 export default  {
   HOST: "localhost",
-  USER: "root",
-  PASSWORD: "root",
-  DB: "backpack",
+  USER: "",
+  PASSWORD: "",
+  DB: "",
   dialect: "mysql",
   pool: {
     max: 5,
