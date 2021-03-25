@@ -47,12 +47,12 @@ import { routingMiddleWare} from "./app/routes/index.js";
 routingMiddleWare(app)
 
 
-var admin = require('firebase-admin');
+// var admin = require('firebase-admin');
 
-admin.initializeApp({
-  credential: admin.credential.applicationDefault(),
-  databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
-});
+// admin.initializeApp({
+//   credential: admin.credential.applicationDefault(),
+//   databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
+// });
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
@@ -75,23 +75,23 @@ app.listen(PORT, () => {
     console.log('Error creating new user:', error);
   });*/
 
-const actionCodeSettings = {
-   // URL you want to redirect back to. The domain (www.example.com) for
-   // this URL must be whitelisted in the Firebase Console.
-   url: 'https://www.example.com/checkout?cartId=1234',
-   // This must be true for email link sign-in.
-   handleCodeInApp: true,
-   iOS: {
-     bundleId: 'com.example.ios',
-   },
-   android: {
-     packageName: 'com.example.android',
-     installApp: true,
-     minimumVersion: '12',
-   },
-   // FDL custom domain.
-   dynamicLinkDomain: 'coolapp.page.link',
- };
+// const actionCodeSettings = {
+//    // URL you want to redirect back to. The domain (www.example.com) for
+//    // this URL must be whitelisted in the Firebase Console.
+//    url: 'https://www.example.com/checkout?cartId=1234',
+//    // This must be true for email link sign-in.
+//    handleCodeInApp: true,
+//    iOS: {
+//      bundleId: 'com.example.ios',
+//    },
+//    android: {
+//      packageName: 'com.example.android',
+//      installApp: true,
+//      minimumVersion: '12',
+//    },
+//    // FDL custom domain.
+//    dynamicLinkDomain: 'coolapp.page.link',
+//  };
   
 
 /*  // Admin SDK API to generate the password reset link.
