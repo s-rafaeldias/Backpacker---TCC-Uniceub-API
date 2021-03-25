@@ -50,9 +50,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   res.json({ message: "Welcome to Backpacker application." });
 // });
 
-import router from "./app/routes/turorial.routes.js";
+import { routingMiddleWare} from "./app/routes/index.js";
 // console.log(routes);
-router(app)
+routingMiddleWare(app)
 
 // set port, listen for requests
 const PORT = process.env.PORT || 8081;
