@@ -5,17 +5,9 @@ import bodyParser from "body-parser";
 import cors from "cors";
 
 const app = express();
-const firebaseConfig = {
-    apiKey: "AIzaSyAEL_IA19Wg9EP8jG2jGWcGBpo5lmBAPkE",
-    authDomain: "backpack-f8005.firebaseapp.com",
-    projectId: "backpack-f8005",
-    storageBucket: "backpack-f8005.appspot.com",
-    messagingSenderId: "373618913012",
-    appId: "1:373618913012:web:bc075828517644515d78a1",
-    measurementId: "G-JKL97MNDQH"
-};
+
 // console.log(firebase);
-firebase.default.initializeApp(firebaseConfig);
+// firebase.default.initializeApp(firebaseConfig);
 
 var corsOptions = {
   origin: "http://localhost:8081"
