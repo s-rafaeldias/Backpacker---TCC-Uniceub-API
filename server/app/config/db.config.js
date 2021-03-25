@@ -1,8 +1,8 @@
-module.exports = {
+export default  {
   HOST: "localhost",
   USER: "root",
-  PASSWORD: "Biroto.8",
-  DB: "testdb",
+  PASSWORD: "root",
+  DB: "backpack",
   dialect: "mysql",
   pool: {
     max: 5,
