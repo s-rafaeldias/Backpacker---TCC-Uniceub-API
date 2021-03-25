@@ -1,3 +1,6 @@
+https://www.figma.com/file/viEhUnNCDjoCWZNlr3zVJF/Backpacker-dark-mode?node-id=0%3A1
+https://trello.com/b/EKFEdl1j/kanban
+
 https://bezkoder.com/react-node-express-mysql/#React_Nodejs_Express_MySQL_example_Overview
 https://bezkoder.com/node-js-express-sequelize-mysql/
 https://dev.mysql.com/doc/workbench/en/wb-installing-linux.html
