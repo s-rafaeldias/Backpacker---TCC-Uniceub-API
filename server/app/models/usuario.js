@@ -1,53 +1,58 @@
 import Sequelize from 'sequelize';
 export default function (sequelize, DataTypes) {
 	return sequelize.define('usuario', {
-		ID_USUARIO: {
+		id_usuario: {
 			type: DataTypes.INTEGER,
 			allowNull: false,
 			primaryKey: true,
 			autoIncrement: true,
 		},
-		EMAIL: {
+		email: {
 			type: DataTypes.CHAR(50),
-			allowNull: false
+			allowNull: false,
+			unique: true
 		},
-		ESTADO_CONTA: {
+		estado_conta: {
 			type: DataTypes.CHAR(1),
 			allowNull: false
 		},
-		NOME_USUARIO: {
+		nome_usuario: {
 			type: DataTypes.CHAR(50),
 			allowNull: true
 		},
-		SEXO: {
+		sexo: {
 			type: DataTypes.CHAR(1),
 			allowNull: true
 		},
-		DT_NASCIMENTO: {
-			type: DataTypes.DATEONLY,
+		dt_nascimento: {
+			type: 'TIMESTAMP',
 			allowNull: true
 		},
-		ID_FIREBASE: {
-			type: DataTypes.CHAR(50),
+		id_firebase: {
+			type: DataTypes.CHAR(100),
+			unique: true,
 			allowNull: false
 		},
-		TS_ULTIMO_LOGIN: {
-			type: DataTypes.DATE,
+		ts_ultimo_login: {
+			type: 'TIMESTAMP',
+			defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
 			allowNull: true
 		},
-		TS_CADASTRO: {
-			type: DataTypes.DATE,
+		ts_cadastro: {
+			type: 'TIMESTAMP',
+			defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
 			allowNull: false,
 			defaultValue: Sequelize.NOW
 		},
-		TS_ALTERACAO_PERFIL: {
-			type: DataTypes.DATE,
+		ts_alteracao_perfil: {
+			type: 'TIMESTAMP',
+			defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
 			allowNull: false,
 			defaultValue: Sequelize.NOW,
 		}
 	}, {
 		sequelize,
-		tableName: 'usuario',
+		tableName: 'USUARIO',
 		timestamps: false,
 		indexes: [
 			{
@@ -55,7 +60,7 @@ export default function (sequelize, DataTypes) {
 				unique: true,
 				using: "BTREE",
 				fields: [
-					{ name: "ID_USUARIO" },
+					{ name: "id_usuario" },
 				]
 			},
 		]

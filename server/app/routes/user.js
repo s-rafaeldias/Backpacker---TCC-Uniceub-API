@@ -3,6 +3,9 @@ import userController
  from "../controllers/user.js"
 // const Op = db.Sequelize.Op;
 const user = (router) =>{
+    // Create a new Tutorial
+    router.post("/cadastra", userController.create);
+    
     router
         .put("/", userController.update )
         //.get()

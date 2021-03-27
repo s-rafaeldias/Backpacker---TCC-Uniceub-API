@@ -16,7 +16,10 @@ const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
 });
 
 const db = {};
+
+
 usuario(sequelize, Sequelize)
+
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
@@ -25,4 +28,5 @@ db.sequelize = sequelize;
 
 // console.log(Object.getOwnPropertyNames(db.usuario))
 export default db;
+
 

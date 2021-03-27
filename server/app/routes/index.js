@@ -6,7 +6,8 @@ let router = express.Router()
 const routingMiddleWare = (app) => {
     
     app.use("/user", user(router));
-    app.use("/viagem", viagem(router))
+    app.use("/viagem", viagem(router));
+    app.use("/cadastra", viagem)
     // Retrieve all Tutorials
     // router.get("/", tutorials.findAll);
 
