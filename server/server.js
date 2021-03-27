@@ -1,5 +1,6 @@
 import firebase from "@firebase/app";
-import _ from "@firebase/auth";
+import "@firebase/auth";
+import firebaseConfig from './app/config/firebase.js'
 import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
@@ -7,7 +8,7 @@ import cors from "cors";
 const app = express();
 
 // console.log(firebase);
-// firebase.default.initializeApp(firebaseConfig);
+firebase.default.initializeApp(firebaseConfig);
 
 var corsOptions = {
   origin: "http://localhost:8081"
@@ -18,10 +19,7 @@ app.use(cors(corsOptions));
 import db from "./app/models/index.js";
 db.sequelize.sync();
 
-// parse requests of content-type - application/json
 app.use(bodyParser.json());
-
-// parse requests of content-type - application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // simple route
@@ -47,14 +45,7 @@ import { routingMiddleWare} from "./app/routes/index.js";
 routingMiddleWare(app)
 
 
-// var admin = require('firebase-admin');
 
-// admin.initializeApp({
-//   credential: admin.credential.applicationDefault(),
-//   databaseURL: 'https://<DATABASE_NAME>.firebaseio.com'
-// });
-
-// set port, listen for requests
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}.`);
@@ -75,36 +66,4 @@ app.listen(PORT, () => {
     console.log('Error creating new user:', error);
   });*/
 
-// const actionCodeSettings = {
-//    // URL you want to redirect back to. The domain (www.example.com) for
-//    // this URL must be whitelisted in the Firebase Console.
-//    url: 'https://www.example.com/checkout?cartId=1234',
-//    // This must be true for email link sign-in.
-//    handleCodeInApp: true,
-//    iOS: {
-//      bundleId: 'com.example.ios',
-//    },
-//    android: {
-//      packageName: 'com.example.android',
-//      installApp: true,
-//      minimumVersion: '12',
-//    },
-//    // FDL custom domain.
-//    dynamicLinkDomain: 'coolapp.page.link',
-//  };
-  
-
-/*  // Admin SDK API to generate the password reset link.
-const email = 'tbadaro@sempreceub.com';
-admin
-  .auth()
-  .generatePasswordResetLink(email, actionCodeSettings)
-  .then((link) => {
-    // Construct password reset email template, embed the link and send
-    // using custom SMTP server.
-    return sendCustomPasswordResetEmail(email, displayName, link);
-  })
-  .catch((error) => {
-    // Some error occurred.
-  });*/
 

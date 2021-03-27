@@ -1,12 +1,15 @@
 import express from 'express';
+
 import {user} from "./user.js"
 import {viagem} from "./viagem.js"
+
+import {auth} from "../middlewares/authMiddleware.js"
 let router = express.Router()
 
 const routingMiddleWare = (app) => {
     
     app.use("/user", user(router));
-    app.use("/viagem", viagem(router))
+    app.use("/viagem", auth, viagem(router))
     // Retrieve all Tutorials
     // router.get("/", tutorials.findAll);
 
