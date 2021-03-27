@@ -27,7 +27,7 @@ export default function (sequelize, DataTypes) {
 			type: DataTypes.DATEONLY,
 			allowNull: true
 		},
-		FB_ID: {
+		ID_FIREBASE: {
 			type: DataTypes.CHAR(50),
 			allowNull: false
 		},
