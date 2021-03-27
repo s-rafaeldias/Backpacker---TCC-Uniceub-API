@@ -18,7 +18,6 @@ const UserController = {
                 message: "Criado", 
                 status: "Success"})} 
         catch(erro){
-            console.log(erro);
             if (erro.original.errno === 1062){
                 return res.status(400).json({
                     message: "Campo chave duplicado",
