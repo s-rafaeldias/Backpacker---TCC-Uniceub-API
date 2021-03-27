@@ -11,10 +11,6 @@ export default function (sequelize, DataTypes) {
 			type: DataTypes.CHAR(50),
 			allowNull: false
 		},
-		SENHA: {	
-			type: DataTypes.BLOB,
-			allowNull: false
-		},
 		ESTADO_CONTA: {
 			type: DataTypes.CHAR(1),
 			allowNull: false
@@ -30,6 +26,10 @@ export default function (sequelize, DataTypes) {
 		DT_NASCIMENTO: {
 			type: DataTypes.DATEONLY,
 			allowNull: true
+		},
+		FB_ID: {
+			type: DataTypes.CHAR(50),
+			allowNull: false
 		},
 		TS_ULTIMO_LOGIN: {
 			type: DataTypes.DATE,

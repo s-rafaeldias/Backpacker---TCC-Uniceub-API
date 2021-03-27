@@ -1,4 +1,35 @@
 import db from "../models/index.js";
+const user =
+
+// Create and Save a new Tutorial
+exports.create = (req, res) => {
+   // Validate request
+   if (!req.body.title) {
+    res.status(400).send({
+      message: "Content can not be empty!"
+    });
+    return;
+  }
+
+  // Create a Tutorial
+  const usuario = {
+    title: req.body.title,
+    description: req.body.description,
+    published: req.body.published ? req.body.published : false
+  };
+
+  // Save Tutorial in the database
+  Usuario.create(usuario)
+    .then(data => {
+      res.send(data);
+    })
+    .catch(err => {
+      res.status(500).send({
+        message:
+          err.message || "Erro ao criar novo usuário"
+      });
+    });
+};
 
 const UserController = {
     "update" : async (req, res) => {
