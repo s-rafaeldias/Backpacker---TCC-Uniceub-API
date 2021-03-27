@@ -13,15 +13,11 @@ const UserController = {
                 id_firebase: req.body.firebase
             };
 
-            console.log(usuario);
-
             const users = await db.sequelize.models.usuario.create(usuario);
-            console.log(users);
             return res.status(200).json({
                 message: "Updated.", 
                 status: "Success"})} 
         catch(erro){
-            console.log(erro);
             return res.status(500).json({
                 message: "Incorrect",
                 status: "Failure" })
