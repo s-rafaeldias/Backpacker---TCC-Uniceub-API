@@ -1,6 +1,8 @@
 import firebase from "@firebase/app";
 import * as admin from 'firebase-admin';
 import firebaseConfig from '../config/firebase.js'
+import db from "../models/index.js";
+import usuario from "../models/usuario.js";
 // import "@firebase/auth";
 // import "firebase";
 
@@ -17,7 +19,11 @@ const auth = async (req, res, next) => {
         let emailVerified = token.email_verified
 
         if (emailVerified) {
-            // TODO: fazer paranaue no banco de marcar email como verificado
+            let verificaEmail = async emailVerified => await db
+                .sequelize.models
+                .usuario
+                .update({estado_conta: true},{where:{email: emailVerified}});
+            verificaEmail (emailVerified);
             next();
         }
 
