@@ -16,16 +16,20 @@ const UserController = {
             const user = await db.sequelize.models.usuario.create(usuario);
             return res.status(201).json({
                 message: "Criado", 
-                status: "Success"})
-        
-        }catch(erro){
-            console.log(erro);
-            return res.status(500).json({
-                message: "Incorrect",
-                status: "Failure" })
+                status: "Success"})} 
+        catch(erro){
+            if (erro.original.errno === 1062){
+                return res.status(400).json({
+                    message: "Campo chave duplicado",
+                    status: "Failure" })
             }
-        
-        },
+            else {
+                return res.status(500).json({
+                    message: "Incorrect",
+                    status: "Failure" })
+                }
+        }    
+    },
 
 
     "update" : async (req, res) => {
