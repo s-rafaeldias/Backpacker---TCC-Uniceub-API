@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Aplicativo para viajantes",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "devWin": "set DEBUG=* & nodemon",
     "devLinux": "nodemon -r esm server.js",
