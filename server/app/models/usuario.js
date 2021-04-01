@@ -12,9 +12,10 @@ export default function (sequelize, DataTypes) {
 			allowNull: false,
 			unique: true
 		},
-		estado_conta: {
+		email_verificado: {
 			type: DataTypes.CHAR(1),
-			allowNull: false
+			allowNull: false,
+			defaultValue: false
 		},
 		nome_usuario: {
 			type: DataTypes.CHAR(50),
@@ -28,7 +29,7 @@ export default function (sequelize, DataTypes) {
 			type: 'TIMESTAMP',
 			allowNull: true
 		},
-		id_firebase: {
+		firebase_id: {
 			type: DataTypes.CHAR(100),
 			unique: true,
 			allowNull: false

@@ -1,5 +1,5 @@
 // import {router} from "./index.js"
-import userController
+import UserController
  from "../controllers/user.js"
 // const Op = db.Sequelize.Op;
 const user = (router) =>{
@@ -9,10 +9,10 @@ const user = (router) =>{
     // TODO: Detalhar  => GET /:id
 
     // Create a new Tutorial
-    router.post("/new", userController.create);
+    router.post("/new", UserController.create);
 
     router
-        .put("/", userController.update )
+        .put("/edit", UserController.update )
         //.get()
         //.post()
     return router

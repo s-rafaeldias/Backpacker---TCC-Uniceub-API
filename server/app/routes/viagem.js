@@ -9,7 +9,7 @@ const viagem = (router) => {
     // TODO: Detalhar viagem => GET /:id
 
     router
-        .put("/", (req,res)=>{res.json({'msg':'nada'})})
+        .get("/", (req,res)=>{res.json({'msg':'nada'})})
     //.get()
     //.post()
     return router
