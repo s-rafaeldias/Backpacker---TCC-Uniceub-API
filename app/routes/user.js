@@ -9,13 +9,14 @@ const user = (router) =>{
     // TODO: Detalhar  => GET /:id
 
     // Create a new Tutorial
+    router.get('/', (req,res)=>{res.json({msg:'root'})})
     router.post("/new", UserController.create);
-
-    router
-        .put("/edit", UserController.update )
+    router.put("/edit", UserController.update )
+    router.get('/:firebase_id', UserController.getDetail)
         //.get()
         //.post()
     return router
 };
 
 export {user}
+// findOne({ where: { title: 'aProject' } })

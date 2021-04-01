@@ -1,5 +1,5 @@
 import db from "../models/index.js";
-import {convertTimeStampToDate} from "../helper/convertDate.js"
+import {convertTimeStampToDate, timeNow} from "../helper/convertDate.js"
 
 const UserController = {
     "create" : async (req, res) => {
@@ -18,6 +18,7 @@ const UserController = {
                 message: "Criado", 
                 status: "Success"})} 
         catch(erro){
+            console.log(erro);
             if (erro.original.errno === 1062){
                 return res.status(400).json({
                     message: "Campo chave duplicado",
@@ -40,13 +41,13 @@ const UserController = {
 
                 if (payload.dt_nascimento !== undefined){
                     payload.dt_nascimento = convertTimeStampToDate(payload.dt_nascimento)
-                }  
+                }
                 //email, nome, sexo, dt_nascimento
                 const users = await db.sequelize.models.usuario.update(payload,{
                     where: {
                         firebase_id: firebase_id
                     }
-                })
+                })  
                 if ( users[0] === 1){
                     return res.status(200).json({
                         message: "Updated.", 
@@ -70,6 +71,31 @@ const UserController = {
             })
         }
 
+    },
+    "getDetail" : async (req, res) =>{
+        try{
+            let {firebase_id} = req.params
+            let user = await db.sequelize.models.usuario.findOne({
+                where: { 
+                    firebase_id: firebase_id 
+                }
+            });
+
+            if (user !== null){
+                let userData = {...user.dataValues}
+                return res.status(200).json({
+                    data : userData
+                })
+            }
+            return res.status(404).json({
+                message: "Not Found"
+            })
+
+        }catch{
+            return res.status(400).json({
+                message: "Bad Request"
+            })
+        }   
     }
 }
     
