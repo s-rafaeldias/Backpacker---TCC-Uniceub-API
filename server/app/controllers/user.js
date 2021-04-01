@@ -34,9 +34,9 @@ const UserController = {
 
     "update" : async (req, res) => {
         try{
-            let payload = req.body.payload
+            let {payload} = req.body
+            let {firebase_id} = req.body
             if ( ((payload.email || payload.nome_usuario || payload.sexo || payload.dt_nascimento) !== undefined) && ((req.body.firebase_id && req.body.payload) !== undefined) ){
-                let {firebase_id} = req.body
 
                 if (payload.dt_nascimento !== undefined){
                     payload.dt_nascimento = convertTimeStampToDate(payload.dt_nascimento)
