@@ -35,21 +35,14 @@ export default function (sequelize, DataTypes) {
 			allowNull: false
 		},
 		ts_ultimo_login: {
-			type: 'TIMESTAMP',
-			defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-			allowNull: true
+            type: 'DATETIME DEFAULT CURRENT_TIMESTAMP'
 		},
 		ts_cadastro: {
-			type: 'TIMESTAMP',
-			defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-			allowNull: false,
-			defaultValue: Sequelize.NOW
+            type: 'DATETIME DEFAULT CURRENT_TIMESTAMP'
 		},
 		ts_alteracao_perfil: {
-			type: 'TIMESTAMP',
-			defaultValue: Sequelize.literal('CURRENT_TIMESTAMP'),
-			allowNull: false,
-			defaultValue: Sequelize.NOW,
+            type: 'DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP'
+			// allowNull: false,
 		}
 	}, {
 		sequelize,
