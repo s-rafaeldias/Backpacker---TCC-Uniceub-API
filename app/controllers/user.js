@@ -128,38 +128,23 @@ const UserController = {
 
     delete: async (req, res) => {
         try{
-            console.log(req.body);
-            let user = await db.sequelize.models.usuario.findOne({
-                where: {
-                    id_firebase: req.body.firebase_id
-                },  
-            });
-
-            if (user !== null) {
-                console.log("Entrei");
-                if(req.body.soft_delete === 'true'){
-                    const users = await db.sequelize.models.usuario.update({conta_ativa: false}, {
-                        where: { id_firebase: req.body.firebase_id },
-                    });
-
-                }
-                else{
-                    const users = await db.sequelize.models.usuario.destroy({
-                        where: { id_firebase: req.body.firebase_id },
-                    });
-
-                }
-                return res.status(200).json({
-                    message: "Apagado",
-                    status: "Success",
+            if(req.body.soft_delete){
+                const users = await db.sequelize.models.usuario.update({conta_ativa: false}, {
+                    where: { id_firebase: req.body.firebase_id },
                 });
+
             }
-            return res.status(404).json({
-                message: "Not Found",
+            else{
+                const users = await db.sequelize.models.usuario.destroy({
+                    where: { id_firebase: req.body.firebase_id },
+                });
+
+            }
+            return res.status(200).json({
+                message: "Apagado",
+                status: "Success",
             });
-
         }
-
         catch{
             return res.status(400).json({
                 message: "Bad Request",
