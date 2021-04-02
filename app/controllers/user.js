@@ -127,16 +127,17 @@ const UserController = {
     },
 
     delete: async (req, res) => {
+        console.log(req.body);
+        let { firebase_id } = req.params;
         try{
             if(req.body.soft_delete){
                 const users = await db.sequelize.models.usuario.update({conta_ativa: false}, {
-                    where: { id_firebase: req.body.firebase_id },
+                    where: { id_firebase: firebase_id },
                 });
-
             }
             else{
                 const users = await db.sequelize.models.usuario.destroy({
-                    where: { id_firebase: req.body.firebase_id },
+                    where: { id_firebase: firebase_id },
                 });
 
             }
@@ -145,7 +146,8 @@ const UserController = {
                 status: "Success",
             });
         }
-        catch{
+        catch(err) {
+            console.log(err);
             return res.status(400).json({
                 message: "Bad Request",
             });
