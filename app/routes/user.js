@@ -13,6 +13,7 @@ const user = (router) =>{
     router.post("/new", UserController.create);
     router.put("/:firebase_id", UserController.update )
     router.get('/:firebase_id', UserController.getDetail)
+    router.delete('/:firebase_id', UserController.delete);
         //.get()
         //.post()
     return router

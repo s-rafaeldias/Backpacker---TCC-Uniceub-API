@@ -46,6 +46,11 @@ export default function(sequelize, DataTypes) {
 				type: "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
 				// allowNull: false,
 			},
+			conta_ativa: {
+				type: DataTypes.CHAR(1),
+				allowNull: false,
+				defaultValue: true,
+			},
 		},
 		{
 			sequelize,
