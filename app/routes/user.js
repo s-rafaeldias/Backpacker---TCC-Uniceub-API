@@ -11,7 +11,7 @@ const user = (router) =>{
     // Create a new Tutorial
     router.get('/', (req,res)=>{res.json({msg:'root'})})
     router.post("/new", UserController.create);
-    router.put("/edit", UserController.update )
+    router.put("/:firebase_id", UserController.update )
     router.get('/:firebase_id', UserController.getDetail)
         //.get()
         //.post()
