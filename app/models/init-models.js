@@ -21,7 +21,7 @@ function initModels(sequelize) {
   var local = _local(sequelize, DataTypes);
   var local_viagem = _local_viagem(sequelize, DataTypes);
   var tipo_usuario = _tipo_usuario(sequelize, DataTypes);
-  var usuario = _usuario(sequelize, DataTypes);
+  var usuario = _usuario(sequelize);
   var usuario_viagem = _usuario_viagem(sequelize, DataTypes);
   var viagem = _viagem(sequelize, DataTypes);
   var viagem_gasto = _viagem_gasto(sequelize, DataTypes);
