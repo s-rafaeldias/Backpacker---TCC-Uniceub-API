@@ -34,6 +34,10 @@ class User extends Model<UserAttributes, UserCreationAttributes>
   public ts_ultimo_login!: Date;
   public ts_cadastro!: Date;
   public ts_alteracao_perfil!: Date;
+
+  public ownsTravel(): boolean {
+    return true;
+  }
 }
 
 export default function(sequelize: Sequelize) {

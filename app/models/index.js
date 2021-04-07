@@ -1,25 +1,22 @@
 import cfg from "../config/db.config.js";
-import usuario from './usuario.js'
-import Sequelize from "sequelize";
+import UserModel from "./usuario";
+import { Sequelize, Dialect } from "sequelize";
 
 const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
   host: cfg.HOST,
-  dialect: cfg.dialect,
-  operatorsAliases: false,
+  dialect: "mysql",
 
   pool: {
     max: cfg.pool.max,
     min: cfg.pool.min,
     acquire: cfg.pool.acquire,
-    idle: cfg.pool.idle
-  }
+    idle: cfg.pool.idle,
+  },
 });
 
 const db = {};
 
-
-usuario(sequelize, Sequelize)
-
+export const User = UserModel(sequelize);
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
@@ -28,5 +25,3 @@ db.sequelize = sequelize;
 
 // console.log(Object.getOwnPropertyNames(db.usuario))
 export default db;
-
-
