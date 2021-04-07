@@ -17,7 +17,16 @@ export interface UserAttributes {
 }
 
 export interface UserCreationAttributes
-  extends Optional<UserAttributes, "id_usuario" | "conta_ativa" | "nome_usuario" | "ts_ultimo_login" | "ts_cadastro" | "ts_alteracao_perfil"> {}
+  extends Optional<
+    UserAttributes,
+    | "id_usuario"
+    | "estado_conta"
+    | "conta_ativa"
+    | "nome_usuario"
+    | "ts_ultimo_login"
+    | "ts_cadastro"
+    | "ts_alteracao_perfil"
+  > {}
 
 class User extends Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes {
@@ -79,13 +88,14 @@ export default function(sequelize: Sequelize) {
       },
       ts_ultimo_login: {
         type: "DATETIME DEFAULT CURRENT_TIMESTAMP",
+        defaultValue: new Date(),
       },
       ts_cadastro: {
         type: "DATETIME DEFAULT CURRENT_TIMESTAMP",
+        defaultValue: new Date(),
       },
       ts_alteracao_perfil: {
         type: "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
-        // allowNull: false,
       },
       conta_ativa: {
         type: DataTypes.BOOLEAN,
@@ -94,7 +104,7 @@ export default function(sequelize: Sequelize) {
       },
     },
     {
-      tableName: "USUARIO",
+      tableName: "USUARIOS",
       timestamps: false,
       indexes: [
         {

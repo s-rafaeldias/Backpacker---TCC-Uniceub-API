@@ -8,13 +8,9 @@ import { UserCreationAttributes } from "../models/usuario";
 export async function createUser(req: Request) {
   let user: UserCreationAttributes = {
     email: req.body.email as string,
-    estado_conta: false,
     nome_usuario: req.body.nome,
     dt_nascimento: convertTimeStampToDate(req.body.dt_nascimento),
     id_firebase: req.body.firebase_id,
-    ts_cadastro: new Date(),
-    ts_alteracao_perfil: new Date(),
-    conta_ativa: true,
   };
 
   return await User.create(user);

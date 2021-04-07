@@ -1,10 +1,10 @@
 import cfg from "../config/db.config.js";
-import UserModel from "./usuario";
+import UserModel from "./user";
 import { Sequelize, Dialect } from "sequelize";
 
 const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
   host: cfg.HOST,
-  dialect: "mysql",
+  dialect: cfg.dialect,
 
   pool: {
     max: cfg.pool.max,
