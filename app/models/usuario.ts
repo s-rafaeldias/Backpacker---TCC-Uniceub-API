@@ -16,8 +16,8 @@ export interface UserAttributes {
   ts_alteracao_perfil: Date;
 }
 
-interface UserCreationAttributes
-  extends Optional<UserAttributes, "id_usuario"> {}
+export interface UserCreationAttributes
+  extends Optional<UserAttributes, "id_usuario" | "conta_ativa" | "nome_usuario" | "ts_ultimo_login" | "ts_cadastro" | "ts_alteracao_perfil"> {}
 
 class User extends Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes {

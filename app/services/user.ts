@@ -2,12 +2,11 @@ import { Request } from "express";
 import { convertTimeStampToDate } from "../helper/convertDate";
 
 import { User } from "../models/index";
-import { UserAttributes } from "../models/usuario";
+import { UserCreationAttributes } from "../models/usuario";
 
-// import db from '../models/index';
 
 export async function createUser(req: Request) {
-  let user: UserAttributes = {
+  let user: UserCreationAttributes = {
     email: req.body.email as string,
     estado_conta: false,
     nome_usuario: req.body.nome,
@@ -21,7 +20,8 @@ export async function createUser(req: Request) {
   return await User.create(user);
 }
 
-export async function updateUser(id_firebase, payload) {
+// TODO: adicionar tipo para payload
+export async function updateUser(id_firebase: string, payload) {
   if (payload.dt_nascimento !== undefined) {
     payload.dt_nascimento = convertTimeStampToDate(payload.dt_nascimento);
   }
