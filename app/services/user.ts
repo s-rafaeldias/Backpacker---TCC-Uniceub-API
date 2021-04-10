@@ -2,7 +2,7 @@ import { Request } from "express";
 import { convertTimeStampToDate } from "../helper/convertDate";
 
 import { User } from "../models/index";
-import { UserCreationAttributes } from "../models/usuario";
+import { UserCreationAttributes } from "../models/user";
 
 
 export async function createUser(req: Request) {
@@ -16,7 +16,6 @@ export async function createUser(req: Request) {
   return await User.create(user);
 }
 
-// TODO: adicionar tipo para payload
 export async function updateUser(id_firebase: string, payload) {
   if (payload.dt_nascimento !== undefined) {
     payload.dt_nascimento = convertTimeStampToDate(payload.dt_nascimento);

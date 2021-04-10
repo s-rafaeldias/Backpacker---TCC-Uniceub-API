@@ -3,7 +3,7 @@ import { Sequelize, Optional, Model, DataTypes } from "sequelize";
 export interface UserAttributes {
   id_usuario: number;
   email: string;
-  estado_conta: boolean;
+  email_verificado: boolean;
   nome_usuario?: string;
   sexo?: string;
   dt_nascimento: Date;
@@ -20,7 +20,7 @@ export interface UserCreationAttributes
   extends Optional<
     UserAttributes,
     | "id_usuario"
-    | "estado_conta"
+    | "email_verificado"
     | "conta_ativa"
     | "nome_usuario"
     | "ts_ultimo_login"
@@ -32,7 +32,7 @@ class User extends Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes {
   public id_usuario!: number;
   public email!: string;
-  public estado_conta!: boolean;
+  public email_verificado!: boolean;
   public nome_usuario!: string;
   public sexo!: string;
   public dt_nascimento!: Date;
@@ -46,6 +46,11 @@ class User extends Model<UserAttributes, UserCreationAttributes>
 
   public ownsTravel(): boolean {
     return true;
+  }
+
+  public async setEmailAsVerified() {
+    this.email_verificado = true;
+    await this.save();
   }
 }
 
@@ -64,10 +69,15 @@ export default function(sequelize: Sequelize) {
         allowNull: false,
         unique: true,
       },
-      estado_conta: {
+      email_verificado: {
         type: DataTypes.BOOLEAN,
         allowNull: false,
         defaultValue: false,
+      },
+      conta_ativa: {
+        type: DataTypes.BOOLEAN,
+        allowNull: false,
+        defaultValue: true,
       },
       nome_usuario: {
         type: DataTypes.CHAR(50),
@@ -96,11 +106,6 @@ export default function(sequelize: Sequelize) {
       },
       ts_alteracao_perfil: {
         type: "DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP",
-      },
-      conta_ativa: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-        defaultValue: true,
       },
     },
     {

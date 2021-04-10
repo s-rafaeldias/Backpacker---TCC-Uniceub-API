@@ -1,5 +1,4 @@
-import firebase from "@firebase/app";
-import "@firebase/auth";
+import * as admin from "firebase-admin";
 import firebaseConfig from "./config/firebase.js";
 import express from "express";
 // import bodyParser from "body-parser";
@@ -7,9 +6,8 @@ import cors from "cors";
 
 const app = express();
 
-// console.log(firebase);
-if (!firebase.apps.length) {
-  firebase.initializeApp(firebaseConfig);
+if (!admin.apps.length) {
+  admin.initializeApp(firebaseConfig);
 }
 
 var corsOptions = {
