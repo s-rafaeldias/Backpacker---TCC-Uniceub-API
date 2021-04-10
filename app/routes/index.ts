@@ -1,15 +1,14 @@
 import express from 'express';
 
-import {user} from "./user.js"
+import { user } from "./user";
 // TODO: mudar nome para `travel`
 import {viagem} from "./viagem.js"
 
-import {auth} from "../middlewares/authMiddleware.js"
 let router = express.Router()
 
 const routingMiddleWare = (app) => {
     app.use("/user", user(router));
-    app.use("/travel", auth, viagem(router))
+    app.use("/travel", viagem(router))
 
     // app.use("/viagem", viagem(router));
     // app.use("/new", viagem)

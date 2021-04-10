@@ -6,7 +6,7 @@ var _gasto = require("./gasto");
 var _local = require("./local");
 var _local_viagem = require("./local_viagem");
 var _tipo_usuario = require("./tipo_usuario");
-var _usuario = require("./usuario");
+var _usuario = require("./user");
 var _usuario_viagem = require("./usuario_viagem");
 var _viagem = require("./viagem");
 var _viagem_gasto = require("./viagem_gasto");
@@ -21,7 +21,7 @@ function initModels(sequelize) {
   var local = _local(sequelize, DataTypes);
   var local_viagem = _local_viagem(sequelize, DataTypes);
   var tipo_usuario = _tipo_usuario(sequelize, DataTypes);
-  var usuario = _usuario(sequelize, DataTypes);
+  var usuario = _usuario(sequelize);
   var usuario_viagem = _usuario_viagem(sequelize, DataTypes);
   var viagem = _viagem(sequelize, DataTypes);
   var viagem_gasto = _viagem_gasto(sequelize, DataTypes);
