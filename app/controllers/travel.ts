@@ -1,11 +1,11 @@
-import { createUser, updateUser, getUser, deleteUser } from "../services/user";
+import { createTravel, updateTravel, getTravel, getAllTravel, deleteTravel } from "../services/travel";
 import { Request, Response } from "express";
 import { UniqueConstraintError, ValidationError } from "sequelize";
 
-const UserController = {
+const TravelController = {
   create: async (req: Request, res: Response) => {
     try {
-      await createUser(req);
+      await createTravel(req);
       return res.sendStatus(201);
     } catch (err) {
       console.log(err);
@@ -31,10 +31,10 @@ const UserController = {
 
   update: async (req: Request, res: Response) => {
     try {
-      let { id_firebase } = req.params;
+      let { id_viagem } = req.params;
       let payload = req.body;
 
-      await updateUser(id_firebase, payload);
+      await updateTravel(id_viagem, payload);
 
       return res.status(200).json({
         message: "Updated.",
@@ -50,10 +50,31 @@ const UserController = {
     }
   },
 
+  getAllDetail: async (req: Request, res: Response) => {
+    try {
+      let { id_usuario } = req.params;
+      let user = await getAllTravel(id_usuario);
+
+      if (user !== null) {
+        return res.status(200).json(user.get());
+      }
+
+      return res.status(404).json({
+        message: "Not Found",
+      });
+    } catch (err) {
+      console.log(err);
+
+      return res.status(500).json({
+        message: "Bad Request",
+      });
+    }
+  },
+
   getDetail: async (req: Request, res: Response) => {
     try {
-      let { id_firebase } = req.params;
-      let user = await getUser(id_firebase);
+      let { id_viagem } = req.params;
+      let user = await getTravel(id_viagem);
 
       if (user !== null) {
         return res.status(200).json(user.get());
@@ -72,11 +93,10 @@ const UserController = {
   },
 
   delete: async (req: Request, res: Response) => {
-    let { id_firebase } = req.params;
-    let softDelete = req.body.soft_delete;
 
     try {
-      await deleteUser(id_firebase, softDelete);
+      let { id_viagem } = req.params;
+      await deleteTravel(id_viagem);
 
       return res.status(200).json({
         message: "Apagado",
@@ -92,4 +112,4 @@ const UserController = {
   },
 };
 
-export default UserController;
+export default TravelController;
