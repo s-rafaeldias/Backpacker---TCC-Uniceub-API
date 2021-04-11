@@ -1,4 +1,5 @@
 import { Sequelize, Optional, Model, DataTypes } from "sequelize";
+import { User } from './user';
 //import UserModel from "./user";
 
 export interface TravelAttributes {
@@ -65,6 +66,10 @@ export default function (sequelize: Sequelize) {
       },
       id_usuario: {
         type: DataTypes.INTEGER,
+        references: {
+          model: 'USUARIOS',
+          key: 'id_usuario',
+        },
         allowNull: false,
       },
     },
@@ -82,5 +87,3 @@ export default function (sequelize: Sequelize) {
     }
   );
 }
-
-//Travel.hasOne(UserModel(sequelize), { foreignKey: 'id_usuario' });

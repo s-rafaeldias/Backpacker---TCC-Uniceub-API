@@ -57,7 +57,7 @@ class User extends Model<UserAttributes, UserCreationAttributes>
 
 export default function(sequelize: Sequelize) {
   return sequelize.define<User>(
-    "usuario",
+    "USUARIOS",
     {
       id_usuario: {
         type: DataTypes.INTEGER,

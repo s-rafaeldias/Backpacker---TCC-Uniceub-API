@@ -14,7 +14,7 @@ export const travel = (router: Router) => {
   router.delete("/:id_viagem", verifyToken, TravelController.delete);*/
 
   router.post("/new", TravelController.create);
-  router.get("/all/:id_usuario", TravelController.getAllDetail);
+  router.get("/", TravelController.getTravels);
   router.get("/:id_viagem", TravelController.getDetail);
   router.put("/:id_viagem", TravelController.update);
   router.delete("/:id_viagem", TravelController.delete);
