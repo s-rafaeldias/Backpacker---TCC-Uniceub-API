@@ -7,10 +7,9 @@ import { TravelCreationAttributes } from "../models/travel";
 
 export async function createTravel(req: Request) {
   let travel: TravelCreationAttributes = {
-    nome_viagem: req.body.nome,
+    nome_viagem: req.body.nome_viagem,
     dt_inicio: convertTimeStampToDate(req.body.dt_inicio),
     dt_fim: convertTimeStampToDate(req.body.dt_fim),
-    id_viagem: req.body.id_viagem,
     id_usuario: req.body.id_usuario,
   };
 
@@ -33,7 +32,7 @@ export async function getTravel(id_viagem: string) {
 }
 
 export async function getAllTravel(id_usuario: string) {
-  return await Travel.findOne({ where: { id_usuario } });
+  return await Travel.findAll({ where: { id_usuario } });
 }
 
 export async function deleteTravel(id_viagem: string) {

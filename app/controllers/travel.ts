@@ -53,10 +53,10 @@ const TravelController = {
   getAllDetail: async (req: Request, res: Response) => {
     try {
       let { id_usuario } = req.params;
-      let user = await getAllTravel(id_usuario);
+      let travel = await getAllTravel(id_usuario);
 
-      if (user !== null) {
-        return res.status(200).json(user.get());
+      if (travel !== null) {
+        return res.status(200).json(travel);
       }
 
       return res.status(404).json({
@@ -74,10 +74,10 @@ const TravelController = {
   getDetail: async (req: Request, res: Response) => {
     try {
       let { id_viagem } = req.params;
-      let user = await getTravel(id_viagem);
+      let travel = await getTravel(id_viagem);
 
-      if (user !== null) {
-        return res.status(200).json(user.get());
+      if (travel !== null) {
+        return res.status(200).json(travel.get());
       }
 
       return res.status(404).json({

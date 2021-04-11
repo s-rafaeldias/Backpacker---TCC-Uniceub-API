@@ -14,6 +14,7 @@ export interface TravelAttributes {
 export interface TravelCreationAttributes
   extends Optional<
   TravelAttributes,
+    "id_viagem"
   | "orcamento_viagem"
   | "dt_inicio"
   | "dt_fim"

@@ -23,6 +23,7 @@ export interface UserCreationAttributes
     | "email_verificado"
     | "conta_ativa"
     | "nome_usuario"
+    | "sexo"
     | "ts_ultimo_login"
     | "ts_cadastro"
     | "ts_alteracao_perfil"

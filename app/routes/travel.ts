@@ -7,11 +7,17 @@ export const travel = (router: Router) => {
     res.json({ msg: "root" });
   });
 
-  router.post("/new", TravelController.create);
+/*  router.post("/new", TravelController.create);
   router.get("/all", verifyToken, TravelController.getAllDetail);
   router.get("/:id_viagem", verifyToken, TravelController.getDetail);
   router.put("/:id_viagem", verifyToken, TravelController.update);
-  router.delete("/:id_viagem", verifyToken, TravelController.delete);
+  router.delete("/:id_viagem", verifyToken, TravelController.delete);*/
+
+  router.post("/new", TravelController.create);
+  router.get("/all/:id_usuario", TravelController.getAllDetail);
+  router.get("/:id_viagem", TravelController.getDetail);
+  router.put("/:id_viagem", TravelController.update);
+  router.delete("/:id_viagem", TravelController.delete);
 
   return router;
 };
