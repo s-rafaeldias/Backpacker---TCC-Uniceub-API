@@ -1,9 +1,9 @@
 import { Request } from "express";
+import admin from "firebase-admin";
+
 import { convertTimeStampToDate } from "../helper/convertDate";
-
-import { User } from "../models/index";
-import { UserCreationAttributes } from "../models/user";
-
+import { User } from "../models";
+import { UserModel, UserCreationAttributes } from "../models/user";
 
 export async function createUser(req: Request) {
   let user: UserCreationAttributes = {
@@ -35,3 +35,20 @@ export async function deleteUser(id_firebase: string, softDelete: boolean) {
     await User.destroy({ where: { id_firebase } });
   }
 }
+
+export const getUserFromToken = async (token: string): Promise<UserModel> => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const firebaseData = await admin.auth().verifyIdToken(token);
+      const firebaseID = firebaseData.uid;
+      const user = await getUser(firebaseID);
+      if (user) {
+        resolve(user);
+      } else {
+        reject(new Error("Usuario nao cadastrado"));
+      }
+    } catch (err) {
+      reject(err);
+    }
+  });
+};

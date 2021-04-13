@@ -1,35 +1,32 @@
-import express from 'express';
+import express from "express";
 
-import { user } from "./user";
-// TODO: mudar nome para `travel`
-import {viagem} from "./viagem.js"
+import userRoutes from "./user";
+import travelRoutes from "./travel";
 
-let router = express.Router()
 
-const routingMiddleWare = (app) => {
-    app.use("/user", user(router));
-    app.use("/travel", viagem(router))
+export const routingMiddleWare = (app) => {
+  app.use("/user", userRoutes);
+  app.use("/travel", travelRoutes);
 
-    // app.use("/viagem", viagem(router));
-    // app.use("/new", viagem)
-    // Retrieve all Tutorials
-    // router.get("/", tutorials.findAll);
+  // app.use("/viagem", viagem(router));
+  // app.use("/new", viagem)
+  // Retrieve all Tutorials
+  // router.get("/", tutorials.findAll);
 
-    // // Retrieve all published Tutorials
-    // router.get("/published", tutorials.findAllPublished);
+  // // Retrieve all published Tutorials
+  // router.get("/published", tutorials.findAllPublished);
 
-    // // Retrieve a single Tutorial with id
-    // router.get("/:id", tutorials.findOne);
+  // // Retrieve a single Tutorial with id
+  // router.get("/:id", tutorials.findOne);
 
-    // // Update a Tutorial with id
-    // router.put("/:id", tutorials.update);
+  // // Update a Tutorial with id
+  // router.put("/:id", tutorials.update);
 
-    // // Delete a Tutorial with id
-    // router.delete("/:id", tutorials.delete);
+  // // Delete a Tutorial with id
+  // router.delete("/:id", tutorials.delete);
 
-    // // Delete all Tutorials
-    // router.delete("/", tutorials.deleteAll);
+  // // Delete all Tutorials
+  // router.delete("/", tutorials.deleteAll);
 
-    // app.use('/api/tutorials', router);
+  // app.use('/api/tutorials', router);
 };
-export { routingMiddleWare }

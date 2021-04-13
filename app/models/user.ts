@@ -28,7 +28,7 @@ export interface UserCreationAttributes
     | "ts_alteracao_perfil"
   > {}
 
-export class User extends Model<UserAttributes, UserCreationAttributes>
+export class UserModel extends Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes {
   public id_usuario!: number;
   public email!: string;
@@ -57,7 +57,7 @@ export class User extends Model<UserAttributes, UserCreationAttributes>
 
 
 export default function(sequelize: Sequelize) {
-  return sequelize.define<User>(
+  return sequelize.define<UserModel>(
     "usuario",
     {
       id_usuario: {
