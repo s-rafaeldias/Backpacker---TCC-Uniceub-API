@@ -1,6 +1,6 @@
 import cfg from "../config/db.config.js";
 import UserModel from "./user";
-import { Sequelize, Dialect } from "sequelize";
+import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
   host: cfg.HOST,
@@ -14,14 +14,6 @@ const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
   },
 });
 
-const db = {};
-
 export const User = UserModel(sequelize);
 
-db.Sequelize = Sequelize;
-db.sequelize = sequelize;
-// console.log(db.sequelize.models);
-// models = {}
-
-// console.log(Object.getOwnPropertyNames(db.usuario))
-export default db;
+export default sequelize;

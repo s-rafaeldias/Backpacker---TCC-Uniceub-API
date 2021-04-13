@@ -55,7 +55,7 @@ const UserController = {
       let { firebase_id } = req.params;
       let user = await getUser(firebase_id);
 
-      if (user !== null) {
+      if (user) {
         return res.status(200).json(user.get());
       }
 
