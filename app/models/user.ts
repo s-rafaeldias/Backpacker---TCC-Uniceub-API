@@ -23,6 +23,7 @@ export interface UserCreationAttributes
     | "email_verificado"
     | "conta_ativa"
     | "nome_usuario"
+    | "sexo"
     | "ts_ultimo_login"
     | "ts_cadastro"
     | "ts_alteracao_perfil"
@@ -57,8 +58,8 @@ export class UserModel extends Model<UserAttributes, UserCreationAttributes>
 
 
 export default function(sequelize: Sequelize) {
-  return sequelize.define<UserModel>(
-    "usuario",
+  return sequelize.define<User>(
+    "USUARIOS",
     {
       id_usuario: {
         type: DataTypes.INTEGER,

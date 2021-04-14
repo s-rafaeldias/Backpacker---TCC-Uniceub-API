@@ -6,14 +6,46 @@
 // var _local = require("./local");
 // var _local_viagem = require("./local_viagem");
 // var _tipo_usuario = require("./tipo_usuario");
-// var _usuario = require("./user");
 // var _usuario_viagem = require("./usuario_viagem");
-// var _viagem = require("./viagem");
 // var _viagem_gasto = require("./viagem_gasto");
 // var _viagem_usuario = require("./viagem_usuario");
 // var _viagens_do_usuario = require("./viagens_do_usuario");
 
-// function initModels(sequelize) {
+import { ForeignKeyConstraintError, Sequelize } from "sequelize";
+import Travel from "./travel";
+import User from "./user";
+import UserTravel from "./user_travel"
+function initModels(sequelize: Sequelize) {
+  const user = User(sequelize);
+  const travel = Travel(sequelize);
+  //m-n
+  const userTravel = UserTravel(sequelize);
+
+  
+  user.hasMany(travel, {
+      foreignKey: "id_usuario"
+    });
+    
+  user.belongsToMany(travel,{
+      through:"usuarios_viagens",
+      foreignKey:"id_usuario",
+      otherKey:"id_viagem"
+    });
+  travel.belongsToMany(user,{
+      through: "usuarios_viagens",
+      foreignKey:"id_viagem",
+      otherKey:"id_usuarios"
+    })
+	
+	userTravel.belongsTo(user, {foreignKey:"id_usuario"})
+	userTravel.belongsTo(travel, {foreignKey:"id_viagem"})
+	user.hasMany(userTravel, {foreignKey:"id_usuario"})
+	travel.hasMany(userTravel, {foreignKey:"id_viagem"})
+//   user.hasMany(travel);
+//   travel.belongsTo(user, {
+//     foreignKey: { name: "id_usuario", allowNull: true },
+//   });
+
   // var categoria_documento = _categoria_documento(sequelize, DataTypes);
   // var documento = _documento(sequelize, DataTypes);
   // var documento_viagem = _documento_viagem(sequelize, DataTypes);
@@ -49,21 +81,21 @@
   // viagens_do_usuario.hasMany(usuario_viagem, { as: "ID_VIAGEM_usuario_viagems", foreignKey: "ID_VIAGEM"});
 
   // return {
-    // categoria_documento,
-    // documento,
-    // documento_viagem,
-    // gasto,
-    // local,
-    // local_viagem,
-    // tipo_usuario,
-    // usuario,
-    // usuario_viagem,
-    // viagem,
-    // viagem_gasto,
-    // viagem_usuario,
-    // viagens_do_usuario,
+  // categoria_documento,
+  // documento,
+  // documento_viagem,
+  // gasto,
+  // local,
+  // local_viagem,
+  // tipo_usuario,
+  // usuario,
+  // usuario_viagem,
+  // viagem,
+  // viagem_gasto,
+  // viagem_usuario,
+  // viagens_do_usuario,
   // };
-// }
-// module.exports = initModels;
-// module.exports.initModels = initModels;
-// module.exports.default = initModels;
+}
+module.exports = initModels;
+module.exports.initModels = initModels;
+module.exports.default = initModels;

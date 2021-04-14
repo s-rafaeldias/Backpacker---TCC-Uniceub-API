@@ -10,7 +10,7 @@ export async function createUser(req: Request) {
     email: req.body.email as string,
     nome_usuario: req.body.nome,
     dt_nascimento: convertTimeStampToDate(req.body.dt_nascimento),
-    id_firebase: req.body.firebase_id,
+    id_firebase: req.body.id_firebase,
   };
 
   return await User.create(user);
