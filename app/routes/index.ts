@@ -1,13 +1,12 @@
 import express from "express";
 
-import { user } from "./user";
-import { travel } from "./travel.js";
+import userRoutes from "./user";
+import travelRoutes from "./travel";
 
-let router = express.Router();
 
-const routingMiddleWare = (app) => {
-  app.use("/travel", travel);
-  app.use("/user", user);
+export const routingMiddleWare = (app) => {
+  app.use("/user", userRoutes);
+  app.use("/travel", travelRoutes);
 
   // app.use("/viagem", viagem(router));
   // app.use("/new", viagem)
@@ -31,4 +30,3 @@ const routingMiddleWare = (app) => {
 
   // app.use('/api/tutorials', router);
 };
-export { routingMiddleWare };

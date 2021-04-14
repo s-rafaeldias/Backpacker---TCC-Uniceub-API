@@ -1,24 +1,17 @@
 import UserController from "../controllers/user";
-import { verifyToken } from '../middlewares/auth';
-import { Router, Request, Response } from 'express';
-const router = Router()
-// export const user = (router: Router) => {
-//   router.get("/", (_req: Request, res: Response) => {
-//     res.json({ msg: "root" });
-//   });
+import { verifyToken } from "../middlewares/auth";
+import { Router, Request, Response } from "express";
 
-/*  router.post("/new", UserController.create);
+const router = Router();
 
-  router.put("/:firebase_id", verifyToken, UserController.update);
-  router.get("/:firebase_id", verifyToken, UserController.getDetail);
-  router.delete("/:firebase_id", verifyToken, UserController.delete);*/
+router.get("/", (_req: Request, res: Response) => {
+  res.json({ msg: "root" });
+});
 
 router.post("/new", UserController.create);
 
-router.put("/:id_firebase", UserController.update);
-router.get("/:id_firebase", UserController.getDetail);
-router.delete("/:id_firebase", UserController.delete);
+router.put("/:firebase_id", verifyToken, UserController.update);
+router.get("/:firebase_id", UserController.getDetail);
+router.delete("/:firebase_id", verifyToken, UserController.delete);
 
-export {router as user};
-//   return router;
-// };
+export = router;
