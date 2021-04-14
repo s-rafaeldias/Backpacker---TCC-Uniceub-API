@@ -6,8 +6,8 @@ import { travel } from "./travel.js";
 let router = express.Router();
 
 const routingMiddleWare = (app) => {
-  app.use("/travel", travel(router));
-  app.use("/user", user(router));
+  app.use("/travel", travel);
+  app.use("/user", user);
 
   // app.use("/viagem", viagem(router));
   // app.use("/new", viagem)
