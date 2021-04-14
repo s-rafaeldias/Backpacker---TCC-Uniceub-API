@@ -11,18 +11,40 @@
 // var _viagem_usuario = require("./viagem_usuario");
 // var _viagens_do_usuario = require("./viagens_do_usuario");
 
-import { Sequelize } from "sequelize";
+import { ForeignKeyConstraintError, Sequelize } from "sequelize";
 import Travel from "./travel";
 import User from "./user";
-
+import UserTravel from "./user_travel"
 function initModels(sequelize: Sequelize) {
   const user = User(sequelize);
   const travel = Travel(sequelize);
+  //m-n
+  const userTravel = UserTravel(sequelize);
 
-  user.hasMany(travel);
-  travel.belongsTo(user, {
-    foreignKey: { name: "id_usuario", allowNull: false },
-  });
+  
+  user.hasMany(travel, {
+      foreignKey: "id_usuario"
+    });
+    
+  user.belongsToMany(travel,{
+      through:"usuarios_viagens",
+      foreignKey:"id_usuario",
+      otherKey:"id_viagem"
+    });
+  travel.belongsToMany(user,{
+      through: "usuarios_viagens",
+      foreignKey:"id_viagem",
+      otherKey:"id_usuarios"
+    })
+	
+	userTravel.belongsTo(user, {foreignKey:"id_usuario"})
+	userTravel.belongsTo(travel, {foreignKey:"id_viagem"})
+	user.hasMany(userTravel, {foreignKey:"id_usuario"})
+	travel.hasMany(userTravel, {foreignKey:"id_viagem"})
+//   user.hasMany(travel);
+//   travel.belongsTo(user, {
+//     foreignKey: { name: "id_usuario", allowNull: true },
+//   });
 
   // var categoria_documento = _categoria_documento(sequelize, DataTypes);
   // var documento = _documento(sequelize, DataTypes);
