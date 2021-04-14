@@ -1,5 +1,4 @@
 import { Sequelize, Optional, Model, DataTypes } from "sequelize";
-import { User } from './user';
 //import UserModel from "./user";
 
 export interface TravelAttributes {
@@ -22,7 +21,7 @@ export interface TravelCreationAttributes
   | "descricao"
   > { }
 
-class Travel extends Model<TravelAttributes, TravelCreationAttributes>
+class TravelModel extends Model<TravelAttributes, TravelCreationAttributes>
   implements TravelAttributes {
   public id_viagem!: number;
   public nome_viagem!: string;
@@ -35,7 +34,7 @@ class Travel extends Model<TravelAttributes, TravelCreationAttributes>
 }
 
 export default function (sequelize: Sequelize) {
-  return sequelize.define<Travel>(
+  return sequelize.define<TravelModel>(
     "viagem",
     {
       id_viagem: {

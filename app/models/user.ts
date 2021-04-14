@@ -54,11 +54,9 @@ export class UserModel extends Model<UserAttributes, UserCreationAttributes>
     await this.save();
   }
 }
-// Associations
-
 
 export default function(sequelize: Sequelize) {
-  return sequelize.define<User>(
+  return sequelize.define<UserModel>(
     "USUARIOS",
     {
       id_usuario: {

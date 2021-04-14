@@ -1,6 +1,4 @@
-import { Sequelize, Optional, Model, DataTypes } from "sequelize";
-import { User } from './user';
-
+import { Sequelize, Model, DataTypes } from "sequelize";
 
 export interface UserTravelAttributes {
   id_usuario_viagem: number;
@@ -8,18 +6,15 @@ export interface UserTravelAttributes {
   id_viagem: number;
 }
 
-
-
-class UserTravel extends Model<UserTravelAttributes>
+class UserTravelModel extends Model<UserTravelAttributes>
   implements UserTravelAttributes {
   public id_usuario_viagem!: number;
   public id_usuario!: number;
   public id_viagem!: number;
-
 }
 
-export default function (sequelize: Sequelize) {
-  return sequelize.define<UserTravel>(
+export default function(sequelize: Sequelize) {
+  return sequelize.define<UserTravelModel>(
     "usuarios_viagens",
     {
       id_usuario_viagem: {
@@ -31,16 +26,16 @@ export default function (sequelize: Sequelize) {
       id_usuario: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'USUARIOS',
-          key: 'id_usuario',
+          model: "USUARIOS",
+          key: "id_usuario",
         },
         allowNull: false,
       },
       id_viagem: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'VIAGENS',
-          key: 'id_usuario',
+          model: "VIAGENS",
+          key: "id_usuario",
         },
         allowNull: false,
       },
