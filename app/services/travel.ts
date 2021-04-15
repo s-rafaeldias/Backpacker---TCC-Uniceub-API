@@ -1,19 +1,30 @@
 import { Request } from "express";
 import { convertTimeStampToDate } from "../helper/convertDate";
 
-import { Travel } from "../models/index";
+import { Travel, User } from "../models/index";
 import { TravelCreationAttributes } from "../models/travel";
+import { getUserFromToken } from '../services/user';
 
 
 export async function createTravel(req: Request) {
-  let travel: TravelCreationAttributes = {
+  let travelData: TravelCreationAttributes = {
     nome_viagem: req.body.nome_viagem,
     dt_inicio: convertTimeStampToDate(req.body.dt_inicio),
     dt_fim: convertTimeStampToDate(req.body.dt_fim),
     id_usuario: req.body.id_usuario,
   };
+  let travel = await Travel.create(travelData);
 
-  return await Travel.create(travel);
+  // Pegar usario com base no id_firebase
+  // let token = req.headers.authorization || "sdfgsdf";
+
+  // let user = await getUserFromToken(token);
+  let user = await User.findByPk(1);
+  if (user) {
+    return await user.addTravel(travel);
+  }
+
+  return;
 }
 
 export async function updateTravel(id_viagem: string, payload) {

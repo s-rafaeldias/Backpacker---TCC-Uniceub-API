@@ -13,15 +13,12 @@ export interface TravelAttributes {
 
 export interface TravelCreationAttributes
   extends Optional<
-  TravelAttributes,
-    "id_viagem"
-  | "orcamento_viagem"
-  | "dt_inicio"
-  | "dt_fim"
-  | "descricao"
-  > { }
+    TravelAttributes,
+    "id_viagem" | "orcamento_viagem" | "dt_inicio" | "dt_fim" | "descricao"
+  > {}
 
-class TravelModel extends Model<TravelAttributes, TravelCreationAttributes>
+export class TravelModel
+  extends Model<TravelAttributes, TravelCreationAttributes>
   implements TravelAttributes {
   public id_viagem!: number;
   public nome_viagem!: string;
@@ -30,10 +27,9 @@ class TravelModel extends Model<TravelAttributes, TravelCreationAttributes>
   public dt_fim!: Date;
   public descricao!: string;
   public id_usuario!: number;
-
 }
 
-export default function (sequelize: Sequelize) {
+export default function(sequelize: Sequelize) {
   return sequelize.define<TravelModel>(
     "viagem",
     {
@@ -52,11 +48,11 @@ export default function (sequelize: Sequelize) {
         allowNull: true,
       },
       dt_inicio: {
-        type: "TIMESTAMP",
+        type: DataTypes.DATE,
         allowNull: true,
       },
       dt_fim: {
-        type: "TIMESTAMP",
+        type: DataTypes.DATE,
         allowNull: true,
       },
       descricao: {
@@ -66,8 +62,8 @@ export default function (sequelize: Sequelize) {
       id_usuario: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'USUARIOS',
-          key: 'id_usuario',
+          model: "USUARIOS",
+          key: "id_usuario",
         },
         allowNull: false,
       },

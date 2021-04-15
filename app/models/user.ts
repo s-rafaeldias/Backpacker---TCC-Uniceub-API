@@ -1,4 +1,13 @@
-import { Sequelize, Optional, Model, DataTypes } from "sequelize";
+import {
+  Sequelize,
+  Optional,
+  Model,
+  DataTypes,
+  Association,
+  HasManyGetAssociationsMixin,
+  HasManyAddAssociationMixin,
+} from "sequelize";
+import { TravelModel } from "./travel";
 
 export interface UserAttributes {
   id_usuario: number;
@@ -44,6 +53,13 @@ export class UserModel extends Model<UserAttributes, UserCreationAttributes>
   public ts_ultimo_login!: Date;
   public ts_cadastro!: Date;
   public ts_alteracao_perfil!: Date;
+
+  //
+  // public addTravel!: HasManyAddAssociationMixin<TravelModel, number>;
+
+  // public static associations: {
+    // travels: Association<UserModel, TravelModel>,
+  // }
 
   public ownsTravel(): boolean {
     return true;
