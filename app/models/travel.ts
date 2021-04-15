@@ -14,7 +14,7 @@ export interface TravelAttributes {
 export interface TravelCreationAttributes
   extends Optional<
     TravelAttributes,
-    "id_viagem" | "orcamento_viagem" | "dt_inicio" | "dt_fim" | "descricao"
+    "id_viagem" | "orcamento_viagem" | "dt_inicio" | "dt_fim" | "descricao" | "id_usuario"
   > {}
 
 export class TravelModel

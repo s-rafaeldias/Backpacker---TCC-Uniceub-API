@@ -23,6 +23,7 @@ const UserTravel = UserTravelModel(sequelize);
 User.belongsToMany(Travel, {
   through: UserTravel,
   as: "Travel",
+  onDelete: 'CASCADE',
   foreignKey: "id_usuario",
   otherKey: "id_viagem",
 });
@@ -30,6 +31,7 @@ User.belongsToMany(Travel, {
 Travel.belongsToMany(User, {
   through: UserTravel,
   as: "User",
+  onDelete: 'CASCADE',
   foreignKey: "id_viagem",
   otherKey: "id_usuario",
 });
