@@ -9,17 +9,17 @@ import { getUserFromToken } from '../services/user';
 export async function createTravel(req: Request) {
   let travelData: TravelCreationAttributes = {
     nome_viagem: req.body.nome_viagem,
+    descricao: req.body.descricao,
     dt_inicio: convertTimeStampToDate(req.body.dt_inicio),
     dt_fim: convertTimeStampToDate(req.body.dt_fim),
-    id_usuario: req.body.id_usuario,
+    orcamento_viagem: req.body.orcamento_viagem,
   };
   let travel = await Travel.create(travelData);
 
   // Pegar usario com base no id_firebase
-  // let token = req.headers.authorization || "sdfgsdf";
+  let token = req.headers.authorization || "";
 
-  // let user = await getUserFromToken(token);
-  let user = await User.findByPk(1);
+  let user = await getUserFromToken(token);
   if (user) {
     return await user.addTravel(travel);
   }

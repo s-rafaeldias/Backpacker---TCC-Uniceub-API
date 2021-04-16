@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // TODO: configurar isso para usar variavel de ambiente,
 // dependendo do ambiente (DEV ou PROD)
-db.sync({ force: true })
+db.sync({ alter: true })
 
 import { routingMiddleWare } from "./routes/index";
 routingMiddleWare(app);
