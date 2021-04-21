@@ -1,11 +1,19 @@
 import { createUser, updateUser, getUser, deleteUser } from "../services/user";
 import { Request, Response } from "express";
 import { UniqueConstraintError, ValidationError } from "sequelize";
+import { UserCreationAttributes } from "../models/user";
 
 const UserController = {
   create: async (req: Request, res: Response) => {
     try {
-      await createUser(req);
+      let user: UserCreationAttributes = {
+        email: req.body.email,
+        nome_usuario: req.body.nome,
+        dt_nascimento: req.body.dt_nascimento,
+        id_firebase: req.body.id_firebase,
+      };
+
+      await createUser(user);
       return res.sendStatus(201);
     } catch (err) {
       console.log(err);

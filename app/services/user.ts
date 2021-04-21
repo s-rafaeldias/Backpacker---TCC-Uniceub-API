@@ -5,13 +5,8 @@ import { convertTimeStampToDate } from "../helper/convertDate";
 import { User } from "../models";
 import { UserModel, UserCreationAttributes } from "../models/user";
 
-export async function createUser(req: Request) {
-  let user: UserCreationAttributes = {
-    email: req.body.email as string,
-    nome_usuario: req.body.nome,
-    dt_nascimento: convertTimeStampToDate(req.body.dt_nascimento),
-    id_firebase: req.body.id_firebase,
-  };
+export async function createUser(user: UserCreationAttributes) {
+  user.dt_nascimento = convertTimeStampToDate(user.dt_nascimento);
 
   return await User.create(user);
 }

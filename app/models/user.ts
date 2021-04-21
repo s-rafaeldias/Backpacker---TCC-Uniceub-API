@@ -7,6 +7,7 @@ import {
   HasManyGetAssociationsMixin,
   HasManyAddAssociationMixin,
 } from "sequelize";
+
 import { TravelModel } from "./travel";
 
 export interface UserAttributes {
@@ -15,7 +16,7 @@ export interface UserAttributes {
   email_verificado: boolean;
   nome_usuario?: string;
   sexo?: string;
-  dt_nascimento: Date;
+  dt_nascimento: Date | number;
   id_firebase: string;
   conta_ativa: boolean;
 
