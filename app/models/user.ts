@@ -56,7 +56,7 @@ export class UserModel extends Model<UserAttributes, UserCreationAttributes>
   public ts_alteracao_perfil!: Date;
 
   //
-  // public addTravel!: HasManyAddAssociationMixin<TravelModel, number>;
+  public addTravel!: HasManyAddAssociationMixin<TravelModel, number>;
 
   // public static associations: {
     // travels: Association<UserModel, TravelModel>,

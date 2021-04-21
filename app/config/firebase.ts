@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     apiKey: "AIzaSyC9bmfTTm7kPJnOHIXdC9da7WE5sRIVrHI",
     authDomain: "tcc-backpacker.firebaseapp.com",
     projectId: "tcc-backpacker",

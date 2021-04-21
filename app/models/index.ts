@@ -7,6 +7,7 @@ import { Sequelize } from "sequelize";
 export const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
   host: cfg.HOST,
   dialect: "mysql",
+  logging: process.env.ENV === "TEST",
 
   pool: {
     max: cfg.pool.max,
