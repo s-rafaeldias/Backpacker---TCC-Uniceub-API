@@ -6,7 +6,7 @@ import { Sequelize } from "sequelize";
 
 export let sequelize: Sequelize;
 
-if (process.env.CLEARDB_DATABASE_URL) {
+if (!process.env.CLEARDB_DATABASE_URL) {
   sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
     host: cfg.HOST,
     dialect: "mysql",
@@ -22,6 +22,18 @@ if (process.env.CLEARDB_DATABASE_URL) {
 } else {
   sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL!);
 }
+// export const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
+    // host: cfg.HOST,
+    // dialect: "mysql",
+    // logging: process.env.ENV === "TEST",
+
+    // pool: {
+      // max: cfg.pool.max,
+      // min: cfg.pool.min,
+      // acquire: cfg.pool.acquire,
+      // idle: cfg.pool.idle,
+    // },
+  // });
 
 const User = UserModel(sequelize);
 const Travel = TravelModel(sequelize);
