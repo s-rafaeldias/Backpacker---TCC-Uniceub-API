@@ -1,4 +1,4 @@
-import cfg from "../config/db.config.js";
+import cfg from "../config/db.config";
 import UserModel from "./user";
 import TravelModel from "./travel";
 import UserTravelModel from "./user_travel";
@@ -6,7 +6,8 @@ import { Sequelize } from "sequelize";
 
 export const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
   host: cfg.HOST,
-  dialect: cfg.dialect,
+  dialect: "mysql",
+  logging: process.env.ENV === "TEST",
 
   pool: {
     max: cfg.pool.max,
