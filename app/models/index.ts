@@ -4,18 +4,24 @@ import TravelModel from "./travel";
 import UserTravelModel from "./user_travel";
 import { Sequelize } from "sequelize";
 
-export const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
-  host: cfg.HOST,
-  dialect: "mysql",
-  logging: process.env.ENV === "TEST",
+export let sequelize: Sequelize;
 
-  pool: {
-    max: cfg.pool.max,
-    min: cfg.pool.min,
-    acquire: cfg.pool.acquire,
-    idle: cfg.pool.idle,
-  },
-});
+if (process.env.CLEARDB_DATABASE_URL) {
+  sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
+    host: cfg.HOST,
+    dialect: "mysql",
+    logging: process.env.ENV === "TEST",
+
+    pool: {
+      max: cfg.pool.max,
+      min: cfg.pool.min,
+      acquire: cfg.pool.acquire,
+      idle: cfg.pool.idle,
+    },
+  });
+} else {
+  sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL!);
+}
 
 const User = UserModel(sequelize);
 const Travel = TravelModel(sequelize);
@@ -24,7 +30,7 @@ const UserTravel = UserTravelModel(sequelize);
 User.belongsToMany(Travel, {
   through: UserTravel,
   as: "Travel",
-  onDelete: 'CASCADE',
+  onDelete: "CASCADE",
   foreignKey: "id_usuario",
   otherKey: "id_viagem",
 });
@@ -32,7 +38,7 @@ User.belongsToMany(Travel, {
 Travel.belongsToMany(User, {
   through: UserTravel,
   as: "User",
-  onDelete: 'CASCADE',
+  onDelete: "CASCADE",
   foreignKey: "id_viagem",
   otherKey: "id_usuario",
 });
