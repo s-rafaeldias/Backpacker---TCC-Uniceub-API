@@ -7,6 +7,7 @@ const SpotController = {
   create: async (req: Request, res: Response) => {
     try {
       let spot: SpotCreationAttributes = {
+        nome_local: req.body.nome_local,  
         id_viagem: req.body.id_viagem,
       };  
       await createSpot(spot);
@@ -56,7 +57,7 @@ const SpotController = {
 
   getSpots: async (req: Request, res: Response) => {
     try {
-      let { id_viagem } = req.params;
+      let { id_viagem } = req.body.id_viagem;
       let spot = await getAllSpot(id_viagem);
 
       if (spot !== null) {
