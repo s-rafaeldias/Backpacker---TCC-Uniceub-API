@@ -1,4 +1,10 @@
-import { createSpot, updateSpot, getSpot, getAllSpot, deleteSpot } from "../services/spot";
+import {
+  createSpot,
+  updateSpot,
+  getSpot,
+  getAllSpot,
+  deleteSpot,
+} from "../services/spot";
 import { Request, Response } from "express";
 import { UniqueConstraintError, ValidationError } from "sequelize";
 import { SpotCreationAttributes } from "../models/spot";
@@ -7,9 +13,11 @@ const SpotController = {
   create: async (req: Request, res: Response) => {
     try {
       let spot: SpotCreationAttributes = {
-        nome_local: req.body.nome_local,  
+        nome_local: req.body.nome_local,
         id_viagem: req.body.id_viagem,
-      };  
+        dt_planejada: req.body.dt_planejada,
+        descricao_local: req.body.descricao_local,
+      };
       await createSpot(spot);
       return res.sendStatus(201);
     } catch (err) {
@@ -60,7 +68,7 @@ const SpotController = {
       let { id_viagem } = req.body.id_viagem;
       let spot = await getAllSpot(id_viagem);
 
-      if (spot !== null) {
+      if (spot) {
         return res.status(200).json(spot);
       }
 
@@ -81,7 +89,7 @@ const SpotController = {
       let { id_local } = req.params;
       let spot = await getSpot(id_local);
 
-      if (spot !== null) {
+      if (spot) {
         return res.status(200).json(spot.get());
       }
 
@@ -98,7 +106,6 @@ const SpotController = {
   },
 
   delete: async (req: Request, res: Response) => {
-
     try {
       let { id_local } = req.params;
       await deleteSpot(id_local);

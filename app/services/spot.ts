@@ -18,10 +18,9 @@ export async function getSpot(id_local: string) {
 }
 
 export async function deleteSpot(id_local: string) {
-    return await Spot.destroy({ where: { id_local } });
+  return await Spot.destroy({ where: { id_local } });
 }
 
 export async function getAllSpot(id_viagem: string) {
-    return await Spot.findAll({ where: { id_viagem } });
-  }
-  
+  return await Spot.findAll({ where: { id_viagem } });
+}

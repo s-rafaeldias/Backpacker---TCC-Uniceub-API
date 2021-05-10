@@ -3,6 +3,8 @@ import { Request, Response } from "express";
 import { UniqueConstraintError, ValidationError } from "sequelize";
 import { UserCreationAttributes } from "../models/user";
 
+import * as admin from "firebase-admin";
+
 const UserController = {
   create: async (req: Request, res: Response) => {
     try {
@@ -39,10 +41,13 @@ const UserController = {
 
   update: async (req: Request, res: Response) => {
     try {
-      let { id_firebase } = req.params;
+      // TODO: colocar isso em uma lib
+      let token = req.headers.authorization || "";
+      let decodeToken = await admin.auth().verifyIdToken(token);
+
       let payload = req.body;
 
-      await updateUser(id_firebase, payload);
+      await updateUser(decodeToken.uid, payload);
 
       return res.status(200).json({
         message: "Updated.",
@@ -60,8 +65,10 @@ const UserController = {
 
   getDetail: async (req: Request, res: Response) => {
     try {
-      let { id_firebase } = req.params;
-      let user = await getUser(id_firebase);
+      // TODO: colocar isso em uma lib
+      let token = req.headers.authorization || "";
+      let decodeToken = await admin.auth().verifyIdToken(token);
+      let user = await getUser(decodeToken.uid);
 
       if (user) {
         return res.status(200).json(user.get());
@@ -80,11 +87,14 @@ const UserController = {
   },
 
   delete: async (req: Request, res: Response) => {
-    let { id_firebase } = req.params;
+    // TODO: colocar isso em uma lib
+    let token = req.headers.authorization || "";
+    let decodeToken = await admin.auth().verifyIdToken(token);
+
     let softDelete = req.body.soft_delete;
 
     try {
-      await deleteUser(id_firebase, softDelete);
+      await deleteUser(decodeToken.uid, softDelete);
 
       return res.status(200).json({
         message: "Apagado",
