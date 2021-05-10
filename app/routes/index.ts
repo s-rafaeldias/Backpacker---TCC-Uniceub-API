@@ -2,11 +2,13 @@ import express from "express";
 
 import userRoutes from "./user";
 import travelRoutes from "./travel";
+import spotRoutes from "./spot";
 
 
 export const routingMiddleWare = (app) => {
   app.use("/user", userRoutes);
   app.use("/travel", travelRoutes);
+  app.use("/spot", spotRoutes);
 
   // app.use("/viagem", viagem(router));
   // app.use("/new", viagem)

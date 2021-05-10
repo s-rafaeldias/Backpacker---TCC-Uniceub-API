@@ -52,7 +52,7 @@ const TravelController = {
 
   getTravels: async (req: Request, res: Response) => {
     try {
-      let { id_usuario } = req.params;
+      let { id_usuario } = req.body.id_usuario;
       let travel = await getAllTravel(id_usuario);
 
       if (travel !== null) {

@@ -1,21 +1,24 @@
-import { createUser, updateUser, getUser, deleteUser } from "../services/user";
+import {
+  createSpot,
+  updateSpot,
+  getSpot,
+  getAllSpot,
+  deleteSpot,
+} from "../services/spot";
 import { Request, Response } from "express";
 import { UniqueConstraintError, ValidationError } from "sequelize";
-import { UserCreationAttributes } from "../models/user";
+import { SpotCreationAttributes } from "../models/spot";
 
-import * as admin from "firebase-admin";
-
-const UserController = {
+const SpotController = {
   create: async (req: Request, res: Response) => {
     try {
-      let user: UserCreationAttributes = {
-        email: req.body.email,
-        nome_usuario: req.body.nome,
-        dt_nascimento: req.body.dt_nascimento,
-        id_firebase: req.body.id_firebase,
+      let spot: SpotCreationAttributes = {
+        nome_local: req.body.nome_local,
+        id_viagem: req.body.id_viagem,
+        dt_planejada: req.body.dt_planejada,
+        descricao_local: req.body.descricao_local,
       };
-
-      await createUser(user);
+      await createSpot(spot);
       return res.sendStatus(201);
     } catch (err) {
       console.log(err);
@@ -41,13 +44,10 @@ const UserController = {
 
   update: async (req: Request, res: Response) => {
     try {
-      // TODO: colocar isso em uma lib
-      let token = req.headers.authorization || "";
-      let decodeToken = await admin.auth().verifyIdToken(token);
-
+      let { id_local } = req.params;
       let payload = req.body;
 
-      await updateUser(decodeToken.uid, payload);
+      await updateSpot(id_local, payload);
 
       return res.status(200).json({
         message: "Updated.",
@@ -63,15 +63,34 @@ const UserController = {
     }
   },
 
+  getSpots: async (req: Request, res: Response) => {
+    try {
+      let { id_viagem } = req.body.id_viagem;
+      let spot = await getAllSpot(id_viagem);
+
+      if (spot) {
+        return res.status(200).json(spot);
+      }
+
+      return res.status(404).json({
+        message: "Not Found",
+      });
+    } catch (err) {
+      console.log(err);
+
+      return res.status(500).json({
+        message: "Bad Request",
+      });
+    }
+  },
+
   getDetail: async (req: Request, res: Response) => {
     try {
-      // TODO: colocar isso em uma lib
-      let token = req.headers.authorization || "";
-      let decodeToken = await admin.auth().verifyIdToken(token);
-      let user = await getUser(decodeToken.uid);
+      let { id_local } = req.params;
+      let spot = await getSpot(id_local);
 
-      if (user) {
-        return res.status(200).json(user.get());
+      if (spot) {
+        return res.status(200).json(spot.get());
       }
 
       return res.status(404).json({
@@ -87,14 +106,9 @@ const UserController = {
   },
 
   delete: async (req: Request, res: Response) => {
-    // TODO: colocar isso em uma lib
-    let token = req.headers.authorization || "";
-    let decodeToken = await admin.auth().verifyIdToken(token);
-
-    let softDelete = req.body.soft_delete;
-
     try {
-      await deleteUser(decodeToken.uid, softDelete);
+      let { id_local } = req.params;
+      await deleteSpot(id_local);
 
       return res.status(200).json({
         message: "Apagado",
@@ -110,4 +124,4 @@ const UserController = {
   },
 };
 
-export default UserController;
+export default SpotController;

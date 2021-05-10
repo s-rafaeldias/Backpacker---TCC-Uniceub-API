@@ -2,6 +2,7 @@ import cfg from "../config/db.config";
 import UserModel from "./user";
 import TravelModel from "./travel";
 import UserTravelModel from "./user_travel";
+import SpotModel from "./spot";
 import { Sequelize } from "sequelize";
 
 export let sequelize: Sequelize;
@@ -38,6 +39,7 @@ if (!process.env.CLEARDB_DATABASE_URL) {
 const User = UserModel(sequelize);
 const Travel = TravelModel(sequelize);
 const UserTravel = UserTravelModel(sequelize);
+const Spot = SpotModel(sequelize);
 
 User.belongsToMany(Travel, {
   through: UserTravel,
@@ -55,5 +57,16 @@ Travel.belongsToMany(User, {
   otherKey: "id_usuario",
 });
 
-export { User, Travel, UserTravel };
+Travel.hasMany(Spot, {
+  as: "Spot",
+  onDelete: "CASCADE",
+});
+
+Spot.belongsTo(Travel, {
+  as: "Travel",
+  onDelete: "CASCADE",
+  foreignKey: "id_viagem",
+});
+
+export { User, Travel, UserTravel, Spot };
 export default sequelize;
