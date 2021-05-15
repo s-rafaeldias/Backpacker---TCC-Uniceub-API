@@ -3,6 +3,7 @@ import UserModel from "./user";
 import TravelModel from "./travel";
 import UserTravelModel from "./user_travel";
 import SpotModel from "./spot";
+import ExpenseModel from "./expense";
 import { Sequelize } from "sequelize";
 
 export let sequelize: Sequelize;
@@ -40,6 +41,7 @@ const User = UserModel(sequelize);
 const Travel = TravelModel(sequelize);
 const UserTravel = UserTravelModel(sequelize);
 const Spot = SpotModel(sequelize);
+const Expense = ExpenseModel(sequelize);
 
 User.belongsToMany(Travel, {
   through: UserTravel,
@@ -68,5 +70,16 @@ Spot.belongsTo(Travel, {
   foreignKey: "id_viagem",
 });
 
-export { User, Travel, UserTravel, Spot };
+Travel.hasMany(Expense, {
+  as: "Expenses",
+  onDelete: "CASCADE",
+});
+
+Expense.belongsTo(Travel, {
+  as: "Travel",
+  onDelete: "CASCADE",
+  foreignKey: "id_viagem",
+});
+
+export { User, Travel, UserTravel, Spot, Expense };
 export default sequelize;
