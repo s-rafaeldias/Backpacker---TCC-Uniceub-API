@@ -3,6 +3,8 @@ import UserModel from "./user";
 import TravelModel from "./travel";
 import UserTravelModel from "./user_travel";
 import SpotModel from "./spot";
+import DocumentModel from "./document";
+import DocumentCategoryModel from "./document_category"
 import { Sequelize } from "sequelize";
 
 export let sequelize: Sequelize;
@@ -40,7 +42,8 @@ const User = UserModel(sequelize);
 const Travel = TravelModel(sequelize);
 const UserTravel = UserTravelModel(sequelize);
 const Spot = SpotModel(sequelize);
-
+const DocumentCategory = DocumentCategoryModel(sequelize)
+const Document = DocumentModel(sequelize);
 User.belongsToMany(Travel, {
   through: UserTravel,
   as: "Travel",
@@ -67,6 +70,19 @@ Spot.belongsTo(Travel, {
   onDelete: "CASCADE",
   foreignKey: "id_viagem",
 });
+
+Document.belongsTo(DocumentCategory,{
+  as: "categoria_documento",
+  onDelete: "CASCADE",
+  foreignKey: "id_categoria_documento",
+})
+
+Document.belongsTo(Travel,{
+  as: "Travel",
+  onDelete: "CASCADE",
+  foreignKey: "id_viagem",
+})
+
 
 export { User, Travel, UserTravel, Spot };
 export default sequelize;
