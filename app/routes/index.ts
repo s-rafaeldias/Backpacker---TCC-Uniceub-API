@@ -3,13 +3,13 @@ import express from "express";
 import userRoutes from "./user";
 import travelRoutes from "./travel";
 import spotRoutes from "./spot";
-
+import documentRoutes from './document'
 
 export const routingMiddleWare = (app) => {
   app.use("/user", userRoutes);
   app.use("/travel", travelRoutes);
   app.use("/spot", spotRoutes);
-
+  app.use('/document', documentRoutes)
   // app.use("/viagem", viagem(router));
   // app.use("/new", viagem)
   // Retrieve all Tutorials
