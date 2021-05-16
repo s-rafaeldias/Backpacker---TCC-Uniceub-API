@@ -5,13 +5,13 @@ export interface DocumentCategoryAttributes {
   nome_categoria: string;
 }
 
-export interface DocumentCreationAttributes
+export interface DocumentCategoryCreationAttributes
   extends Optional<
     DocumentCategoryAttributes,
     "id_categoria_documento" | "nome_categoria"
   > {}
 
-export class DocumentCategoryModel extends Model<DocumentCategoryAttributes>
+export class DocumentCategoryModel extends Model<DocumentCategoryAttributes, DocumentCategoryCreationAttributes>
   implements DocumentCategoryAttributes {
   public id_categoria_documento!: number;
   public nome_categoria!: string;
