@@ -1,11 +1,12 @@
 import { Request } from "express";
-import admin from "firebase-admin";
+// import admin from "firebase-admin";
 
 import { convertTimeStampToDate } from "../helper/convertDate";
 import { Expense } from "../models";
-import { ExpenseModel, ExpenseCreationAttributes } from "../models/expense";
+import { ExpenseCreationAttributes } from "../models/expense";
 
 export async function createExpense(expense: ExpenseCreationAttributes) {
+  expense.dt_gasto = convertTimeStampToDate(expense.dt_gasto);
   return await Expense.create(expense);
 }
 
