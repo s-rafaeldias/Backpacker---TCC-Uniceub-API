@@ -11,7 +11,8 @@ if (!admin.apps.length) {
 if (process.env.ENV === "TEST") {
   // await db.sync({ force: true });
 } else {
-  db.sync({ alter: true });
+  console.log("Creating DB...");
+  db.sync({ force: true });
 }
 
 const PORT = process.env.PORT || 8081;
