@@ -12,7 +12,7 @@ if (!process.env.CLEARDB_DATABASE_URL) {
   sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
     host: cfg.HOST,
     dialect: "mysql",
-    logging: process.env.ENV === "TEST",
+    logging: true,
 
     pool: {
       max: cfg.pool.max,
@@ -60,25 +60,24 @@ Travel.belongsToMany(User, {
 });
 
 Travel.hasMany(Spot, {
-  as: "Spot",
-  onDelete: "CASCADE",
-});
-
-Spot.belongsTo(Travel, {
-  as: "Travel",
   onDelete: "CASCADE",
   foreignKey: "id_viagem",
+  sourceKey: "id_viagem"
+})
+Spot.belongsTo(Travel, {
+  foreignKey: "id_viagem",
+  targetKey: "id_viagem"
 });
+
 
 Travel.hasMany(Expense, {
-  as: "Expenses",
-  onDelete: "CASCADE",
-});
-
-Expense.belongsTo(Travel, {
-  as: "Travel",
   onDelete: "CASCADE",
   foreignKey: "id_viagem",
+  sourceKey: "id_viagem"
+});
+Expense.belongsTo(Travel, {
+  foreignKey: "id_viagem",
+  targetKey: "id_viagem"
 });
 
 export { User, Travel, UserTravel, Spot, Expense };
