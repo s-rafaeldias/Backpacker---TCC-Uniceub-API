@@ -13,7 +13,6 @@ export async function createTravel(req: Request) {
     dt_inicio: convertTimeStampToDate(req.body.dt_inicio),
     dt_fim: convertTimeStampToDate(req.body.dt_fim),
     orcamento_viagem: req.body.orcamento_viagem,
-    id_usuario: req.body.id_usuario,
   };
   let travel = await Travel.create(travelData);
 

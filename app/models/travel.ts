@@ -8,13 +8,13 @@ export interface TravelAttributes {
   dt_inicio: Date;
   dt_fim: Date;
   descricao: string;
-  id_usuario: number; //Usuario dono da viagem
+  // id_usuario: number; //Usuario dono da viagem
 }
 
 export interface TravelCreationAttributes
   extends Optional<
     TravelAttributes,
-    "id_viagem" | "orcamento_viagem" | "dt_inicio" | "dt_fim" | "descricao" | "id_usuario"
+    "id_viagem" | "orcamento_viagem" | "dt_inicio" | "dt_fim" | "descricao"
   > {}
 
 export class TravelModel
@@ -26,7 +26,6 @@ export class TravelModel
   public dt_inicio!: Date;
   public dt_fim!: Date;
   public descricao!: string;
-  public id_usuario!: number;
 }
 
 export default function(sequelize: Sequelize) {
@@ -58,14 +57,6 @@ export default function(sequelize: Sequelize) {
       descricao: {
         type: DataTypes.TEXT,
         allowNull: true,
-      },
-      id_usuario: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "USUARIOS",
-          key: "id_usuario",
-        },
-        allowNull: false,
       },
     },
     {
