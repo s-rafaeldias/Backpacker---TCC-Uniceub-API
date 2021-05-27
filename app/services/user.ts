@@ -34,10 +34,10 @@ export async function deleteUser(id_firebase: string, softDelete: boolean) {
 export const getUserFromToken = async (token: string): Promise<UserModel> => {
   return new Promise(async (resolve, reject) => {
     try {
-    //  const firebaseData = await admin.auth().verifyIdToken(token);
-    //  const firebaseID = firebaseData.uid;
-    //  const user = await getUser(firebaseID);
-    const user = await getUser(token);
+      const firebaseData = await admin.auth().verifyIdToken(token);
+      const firebaseID = firebaseData.uid;
+      const user = await getUser(firebaseID);
+    //const user = await getUser(token);
       if (user) {
         resolve(user);
       } else {
