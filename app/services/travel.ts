@@ -43,6 +43,7 @@ export async function getTravel(id_viagem: string) {
 }
 
 export async function getAllTravel(id_usuario: string) {
+  // @ts-ignore
   return await Travel.findAll({ where: { id_usuario } });
 }
 
