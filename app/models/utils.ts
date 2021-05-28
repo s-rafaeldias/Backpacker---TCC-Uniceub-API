@@ -1,4 +1,4 @@
-import { User, Travel, UserTravel } from "./index";
+import { User, Travel, UserTravel, Expense } from "./index";
 import { UserCreationAttributes } from "./user";
 import admin from "firebase-admin";
 
@@ -84,5 +84,32 @@ export async function seedDatabase() {
     { id_usuario: 1, id_viagem: 1 },
     { id_usuario: 1, id_viagem: 2 },
     { id_usuario: 2, id_viagem: 3 },
+  ]);
+
+  await Expense.bulkCreate([
+    { 
+      nome_gasto: "Almoço", 
+      dt_gasto: new Date(),
+      descricao_gasto: "Restaurante x", 
+      valor_gasto: 200, 
+      link_imagem_gasto: "https://kjshdkjasd",
+      id_viagem: 1
+    },
+    { 
+      nome_gasto: "Janta", 
+      dt_gasto: new Date(),
+      descricao_gasto: "Restaurante Y", 
+      valor_gasto: 500, 
+      link_imagem_gasto: "https://kjshdkjaasdasdsd",
+      id_viagem: 1
+    },
+    { 
+      nome_gasto: "Entrada Museu", 
+      dt_gasto: new Date(),
+      descricao_gasto: "Museu Nacional", 
+      valor_gasto: 60, 
+      link_imagem_gasto: "https://kjsd",
+      id_viagem: 2
+    },
   ]);
 }
