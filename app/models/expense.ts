@@ -7,7 +7,7 @@ export interface ExpenseAttributes {
   descricao_gasto?: string;
   valor_gasto: number;
   link_imagem_gasto?: string;
-  id_viagem: number; //Viagem a qual o lugar pertence
+  id_viagem: number; //Viagem a qual o gasto pertence
 }
 
 export interface ExpenseCreationAttributes
