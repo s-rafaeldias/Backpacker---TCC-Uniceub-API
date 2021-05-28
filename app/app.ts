@@ -9,15 +9,17 @@ import { routingMiddleWare } from "./routes/index";
 
 const app = express();
 
-if (!admin.apps.length) {
-  if (process.env.ENV === "DEV") {
+if (process.env.ENV === "DEV" || process.env.ENV === "TEST") {
+  if (!admin.apps.length) {
     admin.initializeApp({ projectId: "tcc-backpacker" });
-    if (!firebase.apps.length) {
-      firebase.initializeApp(firebaseConfig);
-      firebase.auth().useEmulator("http://localhost:9099/");
-      console.log("Firebase is on!");
-    }
-  } else {
+  }
+  if (!firebase.apps.length) {
+    firebase.initializeApp(firebaseConfig);
+    firebase.auth().useEmulator("http://localhost:9099/");
+    console.log("Firebase is on!");
+  }
+} else {
+  if (!admin.apps.length) {
     admin.initializeApp(firebaseConfig);
   }
 }

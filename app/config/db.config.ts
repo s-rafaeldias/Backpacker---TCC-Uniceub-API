@@ -2,7 +2,7 @@ export default  {
   HOST: "localhost",
   USER: "root",
   PASSWORD: "",
-  DB: process.env.ENV === "DEV"? "backpack_dev" : "backpack",
+  DB: process.env.ENV === "TEST" ? "backpack_dev" : "backpack",
   dialect: "mysql",
   pool: {
     max: 5,

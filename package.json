@@ -10,7 +10,7 @@
     "build:dev": "npx cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:9099\" ENV=DEV npx tsc --watch",
     "firebase:dev": "npx firebase emulators:start",
     "dev": "npx cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:9099\" ENV=DEV npx concurrently 'npm:build:dev' 'npm:start:dev'",
-    "test": "npx cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:9099\" ENV=DEV npx jest --silent"
+    "test": "npx cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:9099\" ENV=TEST npx jest --silent --detectOpenHandles"
   },
   "engines": {
     "node": "14.x"

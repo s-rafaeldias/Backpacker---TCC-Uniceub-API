@@ -1,6 +1,3 @@
-import admin from "firebase-admin";
-import firebaseConfig from "./app/config/firebase";
-
 import db from "./app/models";
 import { seedDatabase } from "./app/models/utils";
 import app from "./app/app";

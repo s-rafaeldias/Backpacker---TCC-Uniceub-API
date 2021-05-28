@@ -5,7 +5,6 @@ import admin from "firebase-admin";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { User } from "../models";
-import { UserModel, UserCreationAttributes } from "../models/user";
 
 describe("USER API", () => {
   let testUser: firebase.User;
@@ -77,23 +76,18 @@ describe("USER API", () => {
       where: { email: "testUserDelete@email.com" },
     });
     if (!prep) {
-      await admin.auth().createUser({
+      User.create({
+        nome_usuario: "TesteDoDelete",
         email: "testUserDelete@email.com",
-        displayName: "UsuarioParaDelete",
-        password: "12345678",
+        id_firebase: "teste",
+        dt_nascimento: new Date()
       });
-    } else {
-      await firebase
-        .auth()
-        .signInWithEmailAndPassword("testUserDelete@email.com", "12345678");
     }
 
-    let userToDelete = firebase.auth().currentUser!;
-
-    const token = await userToDelete.getIdToken();
+    const token = await testUser.getIdToken();
 
     const result = await request(app)
-      .delete(`/user/${userToDelete.uid}`)
+      .delete(`/user/teste`)
       .set("Authorization", token)
       .send({
         softDelete: "false",
@@ -102,8 +96,4 @@ describe("USER API", () => {
     expect(result.status).toEqual(200);
     done();
   });
-});
-
-afterAll(async () => {
-  await sequelize.close();
 });
