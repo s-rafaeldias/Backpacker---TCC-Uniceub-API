@@ -22,6 +22,6 @@ export async function deleteExpense(id_gasto: string) {
   return await Expense.destroy({ where: { id_gasto } });
 }
 
-export async function getAllExpense(id_gasto: string) {
-  return await Expense.findAll({ where: { id_gasto } });
+export async function getAllExpense(id_viagem: string) {
+  return await Expense.findAll({ where: { id_viagem } });
 }

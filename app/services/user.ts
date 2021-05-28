@@ -37,7 +37,6 @@ export const getUserFromToken = async (token: string): Promise<UserModel> => {
       const firebaseData = await admin.auth().verifyIdToken(token);
       const firebaseID = firebaseData.uid;
       const user = await getUser(firebaseID);
-    //const user = await getUser(token);
       if (user) {
         resolve(user);
       } else {

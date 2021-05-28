@@ -5,9 +5,11 @@ import admin from "firebase-admin";
 import firebase from "firebase/app";
 import "firebase/auth";
 import firebaseConfig from "../config/firebase";
+import { User } from "../models";
+import { UserModel, UserCreationAttributes } from "../models/user";
 
-describe("POST /new", () => {
-  let user;
+describe("USER API", () => {
+  let testUser;
 
   beforeEach(async () => {
     if (!admin.apps.length) {     
@@ -20,7 +22,7 @@ describe("POST /new", () => {
       console.log("Firebase is on!");
     }
 
-    user = await firebase.auth().signInWithEmailAndPassword('teste2@teste.com','12345678');
+    testUser = await firebase.auth().signInWithEmailAndPassword('teste2@teste.com','12345678');
   });
 
     it("should update testUser", async (done) => {
@@ -37,87 +39,80 @@ describe("POST /new", () => {
       dt_nascimento: 1123,
     });
 
- 
-/*    const result = await request(app)
-      .post("/user/new")
-      .send({
+    expect(result.status).toEqual(200);
+    done();
+  });
+
+  it("should create test User", async (done) => {
+    expect.assertions(1);
+
+    const prep = await User.findOne({ where: { id_firebase: "testUser" } });
+    if(prep){
+      await User.destroy({ where: { id_firebase: "testUser" } });
+    }
+    
+     const result = await request(app)
+     .post("/user/new")
+     .send({
         email: "testUser@myMail.com",
         nome: "testUser",
         dt_nascimento: 1,
         id_firebase: "testUser",
-      });*/
+      })
 
-    expect(result.status).toEqual(200);
-    done();
-  });
-});
-
-
-
-
-/*describe("Clear database for the test", () => {
-  it("should delete test User", async (done) => {
-    expect.assertions(1);
-
-    const result = await request(app)
-      .delete("/user/testUser")
-      .send({
-        softDelete: "false"
-      });
-
-      expect(result.status).toEqual(200);
+      expect(result.status).toEqual(201);
       done();
 
   });
-});
 
-
-
-describe("PUT /", () => {
-  it("should update testUser user", async (done) => {
-    expect.assertions(1);
-
-    const result = await request(app)
-      .put("/user/testUser")
-      .send({
-        nome_usuario: "testUserUpdated",
-        sexo: "1",
-        dt_nascimento: 1123,
-      });
-
-    expect(result.status).toEqual(200);
-    done();
-  });
-});
-
-describe("GET /", () => {
   it("should get testUser data", async (done) => {
     expect.assertions(3);
 
-    const result = await request(app)
-      .get("/user/testUser");
+    const token = await firebase.auth().currentUser!.getIdToken();
+    const uid = await firebase.auth().currentUser!.uid;
 
+    const result = await request(app)
+      .get(`/user/${uid}`)
+      .set('Authorization', token);
+ 
     expect(result.status).toEqual(200);
-    expect(result.body.id_firebase).toEqual("testUser");
-    expect(result.body.nome_usuario).toEqual("testUserUpdated");
+    expect(result.body.id_firebase).toEqual(uid);
+    expect(result.body.email).toEqual("teste2@teste.com");
     done();
   });
-});
 
-describe("DELETE /", () => {
   it("should delete test User", async (done) => {
     expect.assertions(1);
 
+    var userToDelete;
+
+    const prep = await User.findOne({ where: { email: "testUserDelete@email.com" } });
+    if(!prep){
+        userToDelete = await admin.auth().createUser({
+          email: "testUserDelete@email.com",
+          displayName: "UsuarioParaDelete",
+          password: "12345678",
+        });     
+      }
+    else{
+      userToDelete = await firebase.auth().signInWithEmailAndPassword('testUserDelete@email.com','12345678');
+    }    
+  
+    const token = await firebase.auth().currentUser!.getIdToken();
+
     const result = await request(app)
-      .delete("/user/testUser")
+      .delete(`/user/${userToDelete.uid}`)
+      .set('Authorization', token)
       .send({
         softDelete: "false"
       });
 
       expect(result.status).toEqual(200);
       done();
+
   });
-});*/
+ 
+});
 
 afterAll(async () => {  
   await sequelize.close();

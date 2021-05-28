@@ -5,10 +5,10 @@ import { Router } from "express";
 
 const router = Router();
 
-router.post("/new", ExpenseController.create);
-router.get("/", ExpenseController.getExpense);
-router.get("/:id_gasto", ExpenseController.getDetail);
-router.put("/:id_gasto", ExpenseController.update);
-router.delete("/:id_gasto", ExpenseController.delete);
+router.post("/new", verifyToken, ExpenseController.create);
+router.get("/", verifyToken, ExpenseController.getExpense);
+router.get("/:id_gasto", verifyToken, ExpenseController.getDetail);
+router.put("/:id_gasto", verifyToken, ExpenseController.update);
+router.delete("/:id_gasto", verifyToken, ExpenseController.delete);
 
 export = router;
