@@ -6,13 +6,13 @@ import { Router } from "express";
 
 const router = Router();
 
-router.post("/new", TravelController.create);
+router.post("/new", verifyToken, TravelController.create);
 
 
-router.get("/", TravelController.getTravels);
-router.get("/:id_viagem", TravelController.getDetail);
-router.put("/:id_viagem", TravelController.update);
-router.delete("/:id_viagem", TravelController.delete);
+router.get("/", verifyToken, TravelController.getTravels);
+router.get("/:id_viagem", verifyToken, TravelController.getDetail);
+router.put("/:id_viagem", verifyToken, TravelController.update);
+router.delete("/:id_viagem", verifyToken, TravelController.delete);
 
 
 router.post("/user/new", UserTravelController.create)

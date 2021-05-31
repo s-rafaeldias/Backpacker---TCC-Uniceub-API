@@ -3,8 +3,7 @@ import { convertTimeStampToDate } from "../helper/convertDate";
 
 import { Travel, User } from "../models/index";
 import { TravelCreationAttributes } from "../models/travel";
-import { getUserFromToken } from '../services/user';
-
+import { getUser, getUserFromToken } from "../services/user";
 
 export async function createTravel(req: Request) {
   let travelData: TravelCreationAttributes = {
@@ -18,9 +17,10 @@ export async function createTravel(req: Request) {
 
   // Pegar usario com base no id_firebase
   let token = req.headers.authorization || "";
-
   let user = await getUserFromToken(token);
+
   if (user) {
+    //@ts-ignore
     return await user.addTravel(travel);
   }
 
@@ -42,11 +42,16 @@ export async function getTravel(id_viagem: string) {
   return await Travel.findOne({ where: { id_viagem } });
 }
 
-export async function getAllTravel(id_usuario: string) {
-  // @ts-ignore
-  return await Travel.findAll({ where: { id_usuario } });
+export async function getTravels(token: string) {
+  let user = await getUserFromToken(token);
+  if (user) {
+    //@ts-ignore
+    return await user.getTravels();
+  }
+
+  return;
 }
 
 export async function deleteTravel(id_viagem: string) {
-    await Travel.destroy({ where: { id_viagem } });
+  await Travel.destroy({ where: { id_viagem } });
 }

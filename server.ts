@@ -9,7 +9,7 @@ if (process.env.ENV === "DEV") {
   });
 } else {
   console.log("Creating DB...");
-  db.sync({ alter: true });
+  db.sync({ force: true });
 }
 
 const PORT = process.env.PORT || 8081;

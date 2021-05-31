@@ -24,18 +24,6 @@ if (!process.env.CLEARDB_DATABASE_URL) {
 } else {
   sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL!);
 }
-// export const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
-    // host: cfg.HOST,
-    // dialect: "mysql",
-    // logging: process.env.ENV === "TEST",
-
-    // pool: {
-      // max: cfg.pool.max,
-      // min: cfg.pool.min,
-      // acquire: cfg.pool.acquire,
-      // idle: cfg.pool.idle,
-    // },
-  // });
 
 const User = UserModel(sequelize);
 const Travel = TravelModel(sequelize);
@@ -45,39 +33,35 @@ const Expense = ExpenseModel(sequelize);
 
 User.belongsToMany(Travel, {
   through: UserTravel,
-  as: "Travel",
+  as: "Travels",
   onDelete: "CASCADE",
-  foreignKey: "id_usuario",
-  otherKey: "id_viagem",
+  foreignKey: { name: "id_usuario" }
 });
-
 Travel.belongsToMany(User, {
   through: UserTravel,
-  as: "User",
+  as: "Users",
   onDelete: "CASCADE",
-  foreignKey: "id_viagem",
-  otherKey: "id_usuario",
+  foreignKey: { name: "id_viagem" }
 });
 
 Travel.hasMany(Spot, {
   onDelete: "CASCADE",
   foreignKey: "id_viagem",
-  sourceKey: "id_viagem"
-})
+  sourceKey: "id_viagem",
+});
 Spot.belongsTo(Travel, {
   foreignKey: "id_viagem",
-  targetKey: "id_viagem"
+  targetKey: "id_viagem",
 });
-
 
 Travel.hasMany(Expense, {
   onDelete: "CASCADE",
   foreignKey: "id_viagem",
-  sourceKey: "id_viagem"
+  sourceKey: "id_viagem",
 });
 Expense.belongsTo(Travel, {
   foreignKey: "id_viagem",
-  targetKey: "id_viagem"
+  targetKey: "id_viagem",
 });
 
 export { User, Travel, UserTravel, Spot, Expense };

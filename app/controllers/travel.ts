@@ -1,11 +1,13 @@
-import { createTravel, updateTravel, getTravel, getAllTravel, deleteTravel } from "../services/travel";
+// import { createTravel, updateTravel, getTravel, getAllTravel, deleteTravel } from "../services/travel";
+import * as travelService from '../services/travel';
+
 import { Request, Response } from "express";
 import { UniqueConstraintError, ValidationError } from "sequelize";
 
 const TravelController = {
   create: async (req: Request, res: Response) => {
     try {
-      await createTravel(req);
+      await travelService.createTravel(req);
       return res.sendStatus(201);
     } catch (err) {
       console.log(err);
@@ -34,7 +36,7 @@ const TravelController = {
       let { id_viagem } = req.params;
       let payload = req.body;
 
-      await updateTravel(id_viagem, payload);
+      await travelService.updateTravel(id_viagem, payload);
 
       return res.status(200).json({
         message: "Updated.",
@@ -52,11 +54,11 @@ const TravelController = {
 
   getTravels: async (req: Request, res: Response) => {
     try {
-      let { id_usuario } = req.body.id_usuario;
-      let travel = await getAllTravel(id_usuario);
+      let token = req.headers.authorization || "";
+      let travels = await travelService.getTravels(token);
 
-      if (travel !== null) {
-        return res.status(200).json(travel);
+      if (travels) {
+        return res.status(200).json(travels);
       }
 
       return res.status(404).json({
@@ -74,7 +76,7 @@ const TravelController = {
   getDetail: async (req: Request, res: Response) => {
     try {
       let { id_viagem } = req.params;
-      let travel = await getTravel(id_viagem);
+      let travel = await travelService.getTravel(id_viagem);
 
       if (travel !== null) {
         return res.status(200).json(travel.get());
@@ -93,10 +95,9 @@ const TravelController = {
   },
 
   delete: async (req: Request, res: Response) => {
-
     try {
       let { id_viagem } = req.params;
-      await deleteTravel(id_viagem);
+      await travelService.deleteTravel(id_viagem);
 
       return res.status(200).json({
         message: "Apagado",
