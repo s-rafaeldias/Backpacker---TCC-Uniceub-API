@@ -66,7 +66,7 @@ const ExpenseController = {
 
   getExpense: async (req: Request, res: Response) => {
     try {
-      let { id_viagem } = req.body.id_viagem;
+      let id_viagem = req.query.id_viagem as string;
       let expense = await getAllExpense(id_viagem);
 
       if (expense) {

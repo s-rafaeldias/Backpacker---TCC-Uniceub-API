@@ -71,25 +71,17 @@ describe("Expense API", () => {
     done();
   });
 
-  // it.skip("should get all expenses from travel 1", async (done) => {
-  // expect.assertions(1);
+  it("should get all expenses from travel 1", async (done) => {
+    expect.assertions(1);
 
-  // const token = await firebase.auth().currentUser!.getIdToken();
-  // const uid = await firebase.auth().currentUser!.uid;
+    const result = await request(app)
+      .get("/expense")
+      .query({ id_viagem: 1 })
+      .set("Authorization", token)
 
-  // const prep2 = await Expense.findAll({ where: { id_viagem: 1 } });
-  // console.log(prep2);
-
-  // const result = await request(app)
-  // .get("/expense/")
-  // .set("Authorization", token)
-  // .send({
-  // id_viagem: 1,
-  // });
-
-  // expect(result.status).toEqual(200);
-  // done();
-  // });
+    expect(result.status).toEqual(200);
+    done();
+  });
 
   // it.skip("should delete test Expense", async (done) => {
   // expect.assertions(1);
