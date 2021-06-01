@@ -6,7 +6,7 @@ import {
   deleteSpot,
 } from "../services/spot";
 import { Request, Response } from "express";
-import { UniqueConstraintError, ValidationError } from "sequelize";
+import { UniqueConstraintError, ValidationError, DatabaseError } from "sequelize";
 import { SpotCreationAttributes } from "../models/spot";
 
 const SpotController = {
@@ -18,8 +18,8 @@ const SpotController = {
         dt_planejada: req.body.dt_planejada,
         descricao_local: req.body.descricao_local,
       };
-      await createSpot(spot);
-      return res.sendStatus(201);
+      let newSpot = await createSpot(spot);
+      return res.status(201).json(newSpot);
     } catch (err) {
       console.log(err);
 
@@ -29,6 +29,11 @@ const SpotController = {
           status: "Failure",
         });
       } else if (err instanceof ValidationError) {
+        return res.status(400).json({
+          message: err.message,
+          status: "Failure",
+        });
+      } else if (err instanceof DatabaseError) {
         return res.status(400).json({
           message: err.message,
           status: "Failure",
