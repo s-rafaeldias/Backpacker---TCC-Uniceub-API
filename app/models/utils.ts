@@ -1,4 +1,4 @@
-import { User, Travel, UserTravel, Expense } from "./index";
+import { User, Travel, UserTravel, Expense, Spot } from "./index";
 import { UserCreationAttributes } from "./user";
 import admin from "firebase-admin";
 
@@ -10,10 +10,10 @@ export async function seedDatabase() {
   // o codigo
   try {
     let usersToDelete = await admin.auth().listUsers();
-    usersToDelete.users.forEach(user => {
+    usersToDelete.users.forEach((user) => {
       admin.auth().deleteUser(user.uid);
     });
-  } catch(err) {
+  } catch (err) {
     console.log("Erro ao deletar usuario do firebase\n", err);
   }
 
@@ -87,29 +87,52 @@ export async function seedDatabase() {
   ]);
 
   await Expense.bulkCreate([
-    { 
-      nome_gasto: "Almoço", 
+    {
+      nome_gasto: "Almoço",
       dt_gasto: new Date(),
-      descricao_gasto: "Restaurante x", 
-      valor_gasto: 200, 
+      descricao_gasto: "Restaurante x",
+      valor_gasto: 200,
       link_imagem_gasto: "https://kjshdkjasd",
-      id_viagem: 1
+      id_viagem: 1,
     },
-    { 
-      nome_gasto: "Janta", 
+    {
+      nome_gasto: "Janta",
       dt_gasto: new Date(),
-      descricao_gasto: "Restaurante Y", 
-      valor_gasto: 500, 
+      descricao_gasto: "Restaurante Y",
+      valor_gasto: 500,
       link_imagem_gasto: "https://kjshdkjaasdasdsd",
-      id_viagem: 1
+      id_viagem: 1,
     },
-    { 
-      nome_gasto: "Entrada Museu", 
+    {
+      nome_gasto: "Entrada Museu",
       dt_gasto: new Date(),
-      descricao_gasto: "Museu Nacional", 
-      valor_gasto: 60, 
+      descricao_gasto: "Museu Nacional",
+      valor_gasto: 60,
       link_imagem_gasto: "https://kjsd",
-      id_viagem: 2
+      id_viagem: 2,
     },
   ]);
+
+  await Spot.bulkCreate([
+    {
+      nome_local: "Cidade A",
+      descricao_local: "bla",
+      dt_planejada: new Date(),
+      visitado: true,
+      id_viagem: 1
+    },
+    {
+      nome_local: "Lugar B",
+      descricao_local: "a".repeat(300),
+      dt_planejada: new Date(),
+      visitado: true,
+      id_viagem: 1
+    },
+    {
+      nome_local: "Cidade B",
+      dt_planejada: new Date(),
+      visitado: true,
+      id_viagem: 2
+    },
+  ])
 }

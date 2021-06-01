@@ -3,16 +3,22 @@ import { convertTimeStampToDate } from "../helper/convertDate";
 
 import { Travel, User } from "../models/index";
 import { TravelCreationAttributes } from "../models/travel";
-import { getUser, getUserFromToken } from "../services/user";
+import { getUserFromToken } from "../services/user";
 
 export async function createTravel(req: Request) {
   let travelData: TravelCreationAttributes = {
     nome_viagem: req.body.nome_viagem,
     descricao: req.body.descricao,
-    dt_inicio: convertTimeStampToDate(req.body.dt_inicio),
-    dt_fim: convertTimeStampToDate(req.body.dt_fim),
     orcamento_viagem: req.body.orcamento_viagem,
   };
+
+  if (req.body.dt_inicio) {
+    travelData.dt_inicio = convertTimeStampToDate(req.body.dt_inicio);
+  }
+  if (req.body.dt_fim) {
+    travelData.dt_fim = convertTimeStampToDate(req.body.dt_fim);
+  }
+
   let travel = await Travel.create(travelData);
 
   // Pegar usario com base no id_firebase

@@ -1,15 +1,19 @@
-import { Request } from "express";
-import admin from "firebase-admin";
-
 import { convertTimeStampToDate } from "../helper/convertDate";
 import { Spot } from "../models";
-import { SpotModel, SpotCreationAttributes } from "../models/spot";
+import {  SpotCreationAttributes } from "../models/spot";
 
 export async function createSpot(spot: SpotCreationAttributes) {
+  if (spot.dt_planejada) {
+    spot.dt_planejada = convertTimeStampToDate(spot.dt_planejada);
+  }
   return await Spot.create(spot);
 }
 
 export async function updateSpot(id_local: string, payload) {
+  if (payload.dt_planejada) {
+    payload.dt_planejada = convertTimeStampToDate(payload.dt_planejada);
+  }
+
   return await Spot.update(payload, { where: { id_local } });
 }
 
@@ -21,6 +25,6 @@ export async function deleteSpot(id_local: string) {
   return await Spot.destroy({ where: { id_local } });
 }
 
-export async function getAllSpot(id_viagem: string) {
+export async function getSpots(id_viagem: string) {
   return await Spot.findAll({ where: { id_viagem } });
 }

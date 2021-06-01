@@ -2,7 +2,7 @@ import {
   createSpot,
   updateSpot,
   getSpot,
-  getAllSpot,
+  getSpots,
   deleteSpot,
 } from "../services/spot";
 import { Request, Response } from "express";
@@ -46,6 +46,8 @@ const SpotController = {
     try {
       let { id_local } = req.params;
       let payload = req.body;
+      console.log(payload);
+      console.log(req.params);
 
       await updateSpot(id_local, payload);
 
@@ -65,8 +67,8 @@ const SpotController = {
 
   getSpots: async (req: Request, res: Response) => {
     try {
-      let { id_viagem } = req.body.id_viagem;
-      let spot = await getAllSpot(id_viagem);
+      let id_viagem = req.query.id_viagem as string;
+      let spot = await getSpots(id_viagem);
 
       if (spot) {
         return res.status(200).json(spot);
