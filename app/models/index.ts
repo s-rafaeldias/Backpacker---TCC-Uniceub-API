@@ -45,6 +45,7 @@ Travel.belongsToMany(User, {
 });
 
 Travel.hasMany(Spot, {
+  as: "spots",
   onDelete: "CASCADE",
   foreignKey: "id_viagem",
   sourceKey: "id_viagem",

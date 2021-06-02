@@ -1,7 +1,7 @@
 import { Request } from "express";
 import { convertTimeStampToDate } from "../helper/convertDate";
 
-import { Travel, User } from "../models/index";
+import { Travel } from "../models/index";
 import { TravelCreationAttributes } from "../models/travel";
 import { getUserFromToken } from "../services/user";
 
@@ -45,7 +45,10 @@ export async function updateTravel(id_viagem: string, payload) {
 }
 
 export async function getTravel(id_viagem: string) {
-  return await Travel.findOne({ where: { id_viagem } });
+  return await Travel.findOne({
+    where: { id_viagem },
+    include: ["spots"],
+  });
 }
 
 export async function getTravels(token: string) {
