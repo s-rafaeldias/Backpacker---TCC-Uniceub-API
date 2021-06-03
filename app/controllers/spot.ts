@@ -2,11 +2,11 @@ import {
   createSpot,
   updateSpot,
   getSpot,
-  getAllSpot,
+  getSpots,
   deleteSpot,
 } from "../services/spot";
 import { Request, Response } from "express";
-import { UniqueConstraintError, ValidationError } from "sequelize";
+import { UniqueConstraintError, ValidationError, DatabaseError } from "sequelize";
 import { SpotCreationAttributes } from "../models/spot";
 
 const SpotController = {
@@ -18,8 +18,8 @@ const SpotController = {
         dt_planejada: req.body.dt_planejada,
         descricao_local: req.body.descricao_local,
       };
-      await createSpot(spot);
-      return res.sendStatus(201);
+      let newSpot = await createSpot(spot);
+      return res.status(201).json(newSpot);
     } catch (err) {
       console.log(err);
 
@@ -29,6 +29,11 @@ const SpotController = {
           status: "Failure",
         });
       } else if (err instanceof ValidationError) {
+        return res.status(400).json({
+          message: err.message,
+          status: "Failure",
+        });
+      } else if (err instanceof DatabaseError) {
         return res.status(400).json({
           message: err.message,
           status: "Failure",
@@ -46,6 +51,8 @@ const SpotController = {
     try {
       let { id_local } = req.params;
       let payload = req.body;
+      console.log(payload);
+      console.log(req.params);
 
       await updateSpot(id_local, payload);
 
@@ -65,8 +72,8 @@ const SpotController = {
 
   getSpots: async (req: Request, res: Response) => {
     try {
-      let { id_viagem } = req.body.id_viagem;
-      let spot = await getAllSpot(id_viagem);
+      let id_viagem = req.query.id_viagem as string;
+      let spot = await getSpots(id_viagem);
 
       if (spot) {
         return res.status(200).json(spot);

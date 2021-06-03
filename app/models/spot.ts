@@ -13,7 +13,7 @@ export interface SpotAttributes {
 export interface SpotCreationAttributes
   extends Optional<
     SpotAttributes,
-    "id_local" | "nome_local" | "dt_planejada" | "visitado" | "ts_visitado" | "descricao_local" | "id_viagem"
+    "id_local" | "dt_planejada" | "visitado" | "ts_visitado" | "descricao_local" | "id_viagem"
   > {}
 
 export class SpotModel

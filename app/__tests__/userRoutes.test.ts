@@ -1,21 +1,19 @@
 import request from "supertest";
 import app from "../app";
-import { sequelize } from "../models/index";
-import admin from "firebase-admin";
 import firebase from "firebase/app";
 import "firebase/auth";
 import { User } from "../models";
 
+let testUser: firebase.User;
+
+beforeEach(async () => {
+  await firebase
+    .auth()
+    .signInWithEmailAndPassword("teste@teste.com", "12345678");
+  testUser = firebase.auth().currentUser!;
+});
+
 describe("USER API", () => {
-  let testUser: firebase.User;
-
-  beforeEach(async () => {
-    await firebase
-      .auth()
-      .signInWithEmailAndPassword("teste@teste.com", "12345678");
-    testUser = firebase.auth().currentUser!;
-  });
-
   it("should update testUser", async (done) => {
     expect.assertions(1);
 
@@ -80,7 +78,7 @@ describe("USER API", () => {
         nome_usuario: "TesteDoDelete",
         email: "testUserDelete@email.com",
         id_firebase: "teste",
-        dt_nascimento: new Date()
+        dt_nascimento: new Date(),
       });
     }
 
