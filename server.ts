@@ -4,7 +4,7 @@ import app from "./app/app";
 import { resetFirebase } from './app/utils/firebase';
 
 // Full reset do firebase
-if (process.env.FULL_RESET) {
+if (process.env.FULL_RESET === "1") {
   resetFirebase()
 }
 
