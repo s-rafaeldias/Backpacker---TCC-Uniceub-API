@@ -26,6 +26,13 @@ export class TravelModel
   public dt_inicio!: Date;
   public dt_fim!: Date;
   public descricao!: string;
+
+  public hasInvalidDateForTravel(date: Date): boolean {
+    return (
+      date > this.dt_inicio ||
+      date < this.dt_fim
+    );
+  }
 }
 
 export default function(sequelize: Sequelize) {

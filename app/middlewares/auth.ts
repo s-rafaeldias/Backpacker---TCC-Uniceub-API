@@ -21,18 +21,13 @@ export const verifyToken = async (
     let user = await getUser(userID);
 
     if (user) {
-      // TODO: marcar email como verificado
       if (emailVerified && user.email_verificado !== emailVerified) {
         await user.setEmailAsVerified();
       }
-
-      next();
-      return;
     }
 
-    res.status(401).json({
-      message: "Token invalido",
-    });
+    next();
+    return;
   } catch (err) {
     console.log(err);
 

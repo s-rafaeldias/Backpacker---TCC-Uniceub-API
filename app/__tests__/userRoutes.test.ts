@@ -6,7 +6,7 @@ import { User } from "../models";
 
 let testUser: firebase.User;
 
-beforeEach(async () => {
+beforeAll(async () => {
   await firebase
     .auth()
     .signInWithEmailAndPassword("teste@teste.com", "12345678");

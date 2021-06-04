@@ -1,9 +1,10 @@
 import { Request } from "express";
 import { convertTimeStampToDate } from "../helper/convertDate";
 
-import { Travel } from "../models/index";
+import { Travel, User } from "../models/index";
 import { TravelCreationAttributes } from "../models/travel";
 import { getUserFromToken } from "../services/user";
+import { ValidationError } from "sequelize";
 
 export async function createTravel(req: Request) {
   let travelData: TravelCreationAttributes = {
@@ -17,6 +18,14 @@ export async function createTravel(req: Request) {
   }
   if (req.body.dt_fim) {
     travelData.dt_fim = convertTimeStampToDate(req.body.dt_fim);
+  }
+
+  if (
+    travelData.dt_fim &&
+    travelData.dt_inicio &&
+    travelData.dt_fim < travelData.dt_inicio
+  ) {
+    throw new ValidationError("Data de inicio anterior a data de fim da viagem");
   }
 
   let travel = await Travel.create(travelData);
@@ -41,13 +50,21 @@ export async function updateTravel(id_viagem: string, payload) {
     payload.dt_fim = convertTimeStampToDate(payload.dt_fim);
   }
 
+  if (
+    payload.dt_fim &&
+    payload.dt_inicio &&
+    payload.dt_fim > payload.dt_inicio
+  ) {
+    throw new ValidationError("Data de inicio anterior a data de fim da viagem");
+  }
+
   return await Travel.update(payload, { where: { id_viagem } });
 }
 
 export async function getTravel(id_viagem: string) {
   return await Travel.findOne({
     where: { id_viagem },
-    include: ["spots"],
+    include: ["spots", "expenses"],
   });
 }
 

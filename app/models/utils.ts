@@ -61,8 +61,8 @@ export async function seedDatabase() {
     {
       nome_viagem: "Viagem 1",
       orcamento_viagem: 10_000,
-      dt_inicio: new Date(),
-      dt_fim: new Date(),
+      dt_inicio: new Date("2020-01-01"),
+      dt_fim: new Date("2020-01-31"),
       descricao: "BBBB",
     },
     {

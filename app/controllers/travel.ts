@@ -7,8 +7,8 @@ import { UniqueConstraintError, ValidationError } from "sequelize";
 const TravelController = {
   create: async (req: Request, res: Response) => {
     try {
-      await travelService.createTravel(req);
-      return res.sendStatus(201);
+      let travel = await travelService.createTravel(req);
+      return res.status(201).json(travel);
     } catch (err) {
       console.log(err);
 
@@ -43,7 +43,6 @@ const TravelController = {
         status: "Success",
       });
     } catch (err) {
-      console.log(err);
 
       return res.status(500).json({
         message: "Incorrect",

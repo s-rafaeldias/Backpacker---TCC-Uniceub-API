@@ -51,8 +51,6 @@ const SpotController = {
     try {
       let { id_local } = req.params;
       let payload = req.body;
-      console.log(payload);
-      console.log(req.params);
 
       await updateSpot(id_local, payload);
 
@@ -61,7 +59,12 @@ const SpotController = {
         status: "Success",
       });
     } catch (err) {
-      console.log(err);
+      if (err instanceof ValidationError) {
+        return res.status(400).json({
+          message: err.message,
+          status: "Failure"
+        })
+      }
 
       return res.status(500).json({
         message: "Incorrect",

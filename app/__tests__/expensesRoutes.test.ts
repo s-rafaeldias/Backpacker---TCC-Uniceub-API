@@ -8,7 +8,7 @@ describe("Expense API", () => {
   let testUser: firebase.User;
   let token: string;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     await firebase
       .auth()
       .signInWithEmailAndPassword("teste@teste.com", "12345678");

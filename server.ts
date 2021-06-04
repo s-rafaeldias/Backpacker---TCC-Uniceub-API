@@ -9,8 +9,13 @@ if (process.env.ENV === "DEV") {
   });
 } else {
   console.log("Creating DB...");
+  db.sync({ alter: true });
+}
+
+if (process.env.FULL_RESET) { 
   db.sync({ force: true });
 }
+
 
 const PORT = process.env.PORT || 8081;
 app.listen(PORT, () => {

@@ -8,7 +8,6 @@ const router = Router();
 
 router.post("/new", verifyToken, TravelController.create);
 
-
 router.get("/", verifyToken, TravelController.getTravels);
 router.get("/:id_viagem", verifyToken, TravelController.getDetail);
 router.put("/:id_viagem", verifyToken, TravelController.update);
