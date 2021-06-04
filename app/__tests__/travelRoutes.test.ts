@@ -4,11 +4,12 @@ import firebase from "firebase/app";
 import "firebase/auth";
 import moment from "moment";
 import { Travel } from "../models";
+import { TravelModel } from "../models/travel";
 
 let testUser: firebase.User;
 let token: string;
 
-beforeEach(async () => {
+beforeAll(async () => {
   await firebase
     .auth()
     .signInWithEmailAndPassword("teste@teste.com", "12345678");
@@ -45,8 +46,8 @@ describe("POST /new", async () => {
 
     const data = {
       nome_viagem: "Teste",
-      dt_inicio: moment().unix(),
-      dt_fim: 1,
+      dt_inicio: moment("2021-06-04").unix(),
+      dt_fim: moment("2021-06-01").unix(),
     }
 
     const result = await request(app)
@@ -64,7 +65,7 @@ describe("PUT /:id", async () => {
   let travel: TravelModel
 
   beforeEach(async () => {
-    travel = Travel.create({ nome_viagem: "Teste" })
+    travel = await Travel.create({ nome_viagem: "Teste" })
   });
 
   it("should return 400 if start date is later than end date", async (done) =>{

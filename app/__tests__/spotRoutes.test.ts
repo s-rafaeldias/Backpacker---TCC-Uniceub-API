@@ -3,20 +3,28 @@ import app from "../app";
 import firebase from "firebase/app";
 import "firebase/auth";
 import moment from "moment";
-import { Spot } from "../models";
+import { Spot, Travel, User } from "../models";
 import { SpotModel } from "../models/spot";
+import { TravelCreationAttributes, TravelModel } from "../models/travel";
 
 let testUser: firebase.User;
 let token: string;
+let travel: TravelModel;
 
 // Executa antes de cada `describe`. Se for definido dentro de um
 // `describe`, roda somente no escopo daquele `describe`
-beforeEach(async () => {
+beforeAll(async () => {
   await firebase
     .auth()
     .signInWithEmailAndPassword("teste@teste.com", "12345678");
   testUser = firebase.auth().currentUser!;
   token = await testUser.getIdToken();
+
+  travel = await Travel.create({
+    nome_viagem: "teste",
+    dt_inicio: new Date("2020-01-01"),
+    dt_fim: new Date("2020-01-12"),
+  });
 });
 
 describe("POST /new", async () => {
@@ -32,8 +40,8 @@ describe("POST /new", async () => {
 
     const data = {
       nome_local: "Teste",
-      dt_planejada: moment().unix(),
-      id_viagem: 1,
+      dt_planejada: moment("2020-01-05").unix(),
+      id_viagem: travel.id_viagem,
       descricao_local: "blablabla",
     };
 
@@ -72,6 +80,24 @@ describe("POST /new", async () => {
       nome_local: "Teste",
       dt_planejada: new Date(),
       id_viagem: 1,
+    };
+
+    const result = await request(app)
+      .post("/spot/new")
+      .set("Authorization", token)
+      .send(data);
+
+    expect(result.status).toEqual(400);
+    done();
+  });
+
+  it("should raise error if date is not between travel date", async (done) => {
+    expect.assertions(1);
+    // let user = await User.findOne({ where: { id_firebase: testUser.uid } });
+    const data = {
+      nome_local: "teste",
+      dt_planejada: moment("2020-01-23").unix(),
+      id_viagem: travel.id_viagem,
     };
 
     const result = await request(app)
@@ -158,15 +184,11 @@ describe("GET /", async () => {
 describe("PUT /:id", async () => {
   let spot: SpotModel;
 
-  beforeEach(async () => {
+  beforeAll(async () => {
     spot = await Spot.create({
       nome_local: "Teste do GG",
-      id_viagem: 3,
+      id_viagem: travel.id_viagem,
     });
-  });
-
-  afterEach(async () => {
-    Spot.destroy({ where: { id_local: spot.id_local } });
   });
 
   it("should edit a existing spot", async (done) => {
@@ -192,6 +214,21 @@ describe("PUT /:id", async () => {
       .send({ nome_local: "novo nome" });
 
     expect(result.status).toBe(401);
+    done();
+  });
+
+  it("should raise error if date is not between travel date", async (done) => {
+    expect.assertions(1);
+    const data = {
+      dt_planejada: moment("2020-01-23").unix(),
+    };
+
+    const result = await request(app)
+      .put(`/spot/${spot.id_local}`)
+      .set("Authorization", token)
+      .send(data);
+
+    expect(result.status).toEqual(400);
     done();
   });
 });

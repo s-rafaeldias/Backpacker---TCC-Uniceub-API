@@ -54,7 +54,7 @@ export async function updateTravel(id_viagem: string, payload) {
   if (
     payload.dt_fim &&
     payload.dt_inicio &&
-    payload.dt_fim < payload.dt_inicio
+    payload.dt_fim > payload.dt_inicio
   ) {
     throw new ValidationError("Data de inicio anterior a data de fim da viagem");
   }

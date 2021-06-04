@@ -51,6 +51,7 @@ Travel.hasMany(Spot, {
   sourceKey: "id_viagem",
 });
 Spot.belongsTo(Travel, {
+  as: "travel",
   foreignKey: "id_viagem",
   targetKey: "id_viagem",
 });
