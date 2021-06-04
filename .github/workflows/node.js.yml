@@ -20,11 +20,15 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
+    - name: Shutdown Ubuntu MySQL (SUDO)
+      run: sudo service mysql stop # Shutdown the Default MySQL, "sudo" is necessary, please not remove it
+
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
       with:
         mysql user: "root"
         mysql password: "root"
+        mysql database: "backpack_dev"
 
     - uses: actions/checkout@v2
 
