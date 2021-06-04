@@ -1,9 +1,10 @@
 import { Request } from "express";
 import { convertTimeStampToDate } from "../helper/convertDate";
 
-import { Travel } from "../models/index";
+import { Travel, User } from "../models/index";
 import { TravelCreationAttributes } from "../models/travel";
 import { getUserFromToken } from "../services/user";
+import { ValidationError } from "sequelize";
 
 export async function createTravel(req: Request) {
   let travelData: TravelCreationAttributes = {
@@ -19,11 +20,20 @@ export async function createTravel(req: Request) {
     travelData.dt_fim = convertTimeStampToDate(req.body.dt_fim);
   }
 
+  if (
+    travelData.dt_fim &&
+    travelData.dt_inicio &&
+    travelData.dt_fim < travelData.dt_inicio
+  ) {
+    throw new ValidationError("Data de inicio anterior a data de fim da viagem");
+  }
+
   let travel = await Travel.create(travelData);
 
   // Pegar usario com base no id_firebase
-  let token = req.headers.authorization || "";
-  let user = await getUserFromToken(token);
+  // let token = req.headers.authorization || "";
+  // let user = await getUserFromToken(token);
+  let user = await User.findByPk(1);
 
   if (user) {
     //@ts-ignore
@@ -39,6 +49,14 @@ export async function updateTravel(id_viagem: string, payload) {
   }
   if (payload.dt_fim !== undefined) {
     payload.dt_fim = convertTimeStampToDate(payload.dt_fim);
+  }
+
+  if (
+    payload.dt_fim &&
+    payload.dt_inicio &&
+    payload.dt_fim < payload.dt_inicio
+  ) {
+    throw new ValidationError("Data de inicio anterior a data de fim da viagem");
   }
 
   return await Travel.update(payload, { where: { id_viagem } });
