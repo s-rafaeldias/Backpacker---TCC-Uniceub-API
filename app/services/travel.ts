@@ -47,7 +47,7 @@ export async function updateTravel(id_viagem: string, payload) {
 export async function getTravel(id_viagem: string) {
   return await Travel.findOne({
     where: { id_viagem },
-    include: ["spots"],
+    include: ["spots", "expenses"],
   });
 }
 

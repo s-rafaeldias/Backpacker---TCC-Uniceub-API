@@ -56,6 +56,7 @@ Spot.belongsTo(Travel, {
 });
 
 Travel.hasMany(Expense, {
+  as: "expenses",
   onDelete: "CASCADE",
   foreignKey: "id_viagem",
   sourceKey: "id_viagem",
