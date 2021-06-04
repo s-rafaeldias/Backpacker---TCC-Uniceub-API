@@ -22,9 +22,12 @@ jobs:
     steps:
     - name: Setup MySQL
       uses: mirromutth/mysql-action@v1.1
-    
+      with:
+        mysql user: "root"
+        mysql password: "root"
+
     - uses: actions/checkout@v2
-    
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v2
       with:
