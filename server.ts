@@ -1,7 +1,6 @@
 import db from "./app/models";
 import { seedDatabase } from "./app/models/utils";
 import app from "./app/app";
-import { resetFirebase } from './app/utils/firebase';
 
 
 if (process.env.ENV === "DEV") {
@@ -11,11 +10,6 @@ if (process.env.ENV === "DEV") {
 } else {
   console.log("Creating DB...");
   db.sync({ alter: true });
-}
-
-// Full reset do firebase
-if (process.env.FULL_RESET === "1") {
-  resetFirebase()
 }
 
 
