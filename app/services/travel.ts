@@ -31,9 +31,8 @@ export async function createTravel(req: Request) {
   let travel = await Travel.create(travelData);
 
   // Pegar usario com base no id_firebase
-  // let token = req.headers.authorization || "";
-  // let user = await getUserFromToken(token);
-  let user = await User.findByPk(1);
+  let token = req.headers.authorization || "";
+  let user = await getUserFromToken(token);
 
   if (user) {
     //@ts-ignore
