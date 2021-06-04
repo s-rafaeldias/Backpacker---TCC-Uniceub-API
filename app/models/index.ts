@@ -13,6 +13,7 @@ if (!process.env.CLEARDB_DATABASE_URL) {
     host: cfg.HOST,
     dialect: "mysql",
     logging: true,
+    port: cfg.port,
 
     pool: {
       max: cfg.pool.max,

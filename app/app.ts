@@ -24,6 +24,10 @@ if (process.env.ENV === "DEV" || process.env.ENV === "TEST") {
   }
 }
 
+if (process.env.DB_PORT) {
+  console.log("PORT:", process.env.DB_PORT);
+}
+
 var corsOptions = {
   origin: "http://localhost:8081",
 };
