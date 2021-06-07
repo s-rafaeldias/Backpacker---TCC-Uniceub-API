@@ -1,0 +1,26 @@
+{
+  "configurations": {
+    "attach": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "attach",
+        "type": "node",
+        "address": "localhost",
+        "port": 9229,
+        "protocol": "inspect",
+        "stopOnEntry": true,
+        "preLaunchTask": "npm build",
+        "console": "integratedTerminal",
+        "program": "${workspaceRoot}/server.ts",
+        "cwd": "${workspaceRoot}",
+        "restart": true,
+        "stopOnEntry": true,
+        "smartSteps": true,
+        "sourceMaps": true,
+        "outFiles": [
+            "${workspaceRoot}/dist/**/*.js"
+        ]
+      }
+    }
+  }
+}
