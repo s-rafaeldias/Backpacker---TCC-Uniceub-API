@@ -37,3 +37,25 @@ export const verifyToken = async (
     });
   }
 };
+
+export const userAllowed = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  let token = req.headers.authorization || "";
+
+  let firebaseVerification = await admin.auth().verifyIdToken(token);
+  let idFirebase = req.params.id_firebase;
+
+  if (idFirebase !== firebaseVerification.uid) {
+    res.status(401).json({
+      error: "Ação proibida",
+      message: "Usuário sem permissão para realizar ação",
+    });
+    return;
+  }
+
+  next();
+  return;
+}

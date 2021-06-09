@@ -39,7 +39,11 @@ export interface UserCreationAttributes
     | "ts_ultimo_login"
     | "ts_cadastro"
     | "ts_alteracao_perfil"
-  > {}
+    | "id_firebase"
+    | "dt_nascimento"
+    > {
+      senha: string
+    }
 
 export class UserModel extends Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes {
