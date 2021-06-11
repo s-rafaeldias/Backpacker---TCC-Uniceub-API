@@ -19,6 +19,66 @@
         "sourceMaps": true,
         "outFiles": [
             "${workspaceRoot}/dist/**/*.js"
+        ],
+        "skipFiles": ["<node_internals>/**"]
+      }
+    },
+
+    "Test all": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "launch",
+        "type": "node",
+        "port": 9229,
+        "smartSteps": true,
+        "runtimeArgs": [
+          "--inspect-brk",
+          "${workspaceRoot}/node_modules/.bin/jest",
+          "--runInBand",
+          "--silent",
+          "--detectOpenHandles",
+          "--forceExit"
+        ],
+        "env": {
+            "FIREBASE_AUTH_EMULATOR_HOST": "localhost:9099",
+            "ENV": "TEST",
+            "DEBUG": 1
+        },
+        "console": "integratedTerminal",
+        "cwd": "${workspaceRoot}",
+        "skipFiles": [
+          "_vimspector_tmp/<node_internals>/**",
+          "${workspaceRoot}/node_modules/**/*.js"
+        ]
+      }
+    },
+
+    "Test current file": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "launch",
+        "type": "node",
+        "port": 9229,
+        "smartSteps": true,
+        "runtimeArgs": [
+          "--inspect-brk",
+          "${workspaceRoot}/node_modules/.bin/jest",
+          "${fileBasenameNoExtension}",
+          "--silent",
+          "--runInBand",
+          "--detectOpenHandles",
+          "--forceExit"
+        ],
+        "env": {
+            "FIREBASE_AUTH_EMULATOR_HOST": "localhost:9099",
+            "ENV": "TEST",
+            "DEBUG": 1
+        },
+        "console": "integratedTerminal",
+        "cwd": "${workspaceRoot}",
+        "skipFiles": [
+          "_vimspector_tmp/<node_internals>/**",
+          "${workspaceRoot}/node_modules/**/*.js"
         ]
       }
     }

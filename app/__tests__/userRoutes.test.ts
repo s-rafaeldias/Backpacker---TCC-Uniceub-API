@@ -8,8 +8,6 @@ import { UserModel } from "../models/user";
 import firebase from "firebase";
 import { createUser } from "../services/user";
 
-jest.useFakeTimers();
-
 afterAll(() => {
   sequelize.close();
 });
@@ -89,9 +87,8 @@ describe("POST /new", () => {
   });
 });
 
-describe("PUT /:id", async () => {
+describe("PUT /:id", () => {
   let user: UserModel;
-  let fbUser: firebase.User;
   let token: string;
 
   beforeEach(async () => {
@@ -146,9 +143,8 @@ describe("PUT /:id", async () => {
   });
 });
 
-describe("GET /:id", async () => {
+describe("GET /:id", () => {
   let user: UserModel;
-  let fbUser: firebase.User;
   let token: string;
 
   beforeEach(async () => {
@@ -197,9 +193,8 @@ describe("GET /:id", async () => {
   });
 });
 
-describe("DELETE /:id", async () => {
+describe("DELETE /:id", () => {
   let user: UserModel;
-  let fbUser: firebase.User;
   let token: string;
 
   beforeEach(async () => {

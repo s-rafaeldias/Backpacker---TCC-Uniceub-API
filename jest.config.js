@@ -11,6 +11,7 @@ module.exports = {
     },
   },
   setupFiles: ["./app/__tests__/setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/app/__tests__/jest.setup.ts"],
   globalSetup: "./app/__tests__/setup.ts",
   globalTeardown: "./app/__tests__/teardown.ts",
   testPathIgnorePatterns: [
@@ -18,5 +19,6 @@ module.exports = {
     "/dist/",
     "<rootDir>/app/__tests__/setup.ts",
     "<rootDir>/app/__tests__/teardown.ts",
+    "<rootDir>/app/__tests__/jest.setup.ts",
   ],
 };
