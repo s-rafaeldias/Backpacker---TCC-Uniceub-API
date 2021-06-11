@@ -16,17 +16,17 @@ export async function createNewTraveler(req: Request) {
 }
 
 export async function getUsersFromTravel(id_viagem: string) {
-  let viagem = await Travel.findOne({ where: { id_viagem } });
+  let viagem = await Travel.findByPk(id_viagem);
   // @ts-ignore
-  let users = await viagem.getUser();
+  let users = await viagem.getUsers();
 
   return users;
 }
 
 export async function deleteUserTravel(id_viagem: string, id_usuario: string) {
-  let user = await User.findOne({ where: { id_usuario } });
-  let travel = await Travel.findOne({ where: { id_viagem } });
+
+  let travel = await Travel.findByPk(id_viagem, { include: ["users"] });
 
   // @ts-ignore
-  await user.removeTravel(travel);
+  return await travel.removeUser(id_usuario);
 }

@@ -32,7 +32,7 @@ const UserTravelController = {
   getDetails: async (req: Request, res: Response) => {
     try {
       let { id_viagem } = req.params;
-      
+
       let users = await getUsersFromTravel(id_viagem);
 
       if (users !== null) {
@@ -52,18 +52,15 @@ const UserTravelController = {
   },
 
   delete: async (req: Request, res: Response) => {
-
     try {
       let { id_usuario, id_viagem } = req.params;
-      await deleteUserTravel(id_usuario, id_viagem);
+      await deleteUserTravel(id_viagem, id_usuario);
 
       return res.status(200).json({
         message: "Apagado",
         status: "Success",
       });
     } catch (err) {
-      console.log(err);
-
       return res.status(500).json({
         message: "Bad Request",
       });
