@@ -3,14 +3,10 @@ import app from "../app";
 import admin from "firebase-admin";
 import { User } from "../models";
 import moment from "moment";
-import { sequelize } from "../models";
 import { UserModel } from "../models/user";
 import firebase from "firebase";
 import { createUser } from "../services/user";
 
-afterAll(() => {
-  sequelize.close();
-});
 
 describe("POST /new", () => {
   let postData = {
