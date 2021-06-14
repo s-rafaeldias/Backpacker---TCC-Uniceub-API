@@ -34,13 +34,13 @@ const Expense = ExpenseModel(sequelize);
 
 User.belongsToMany(Travel, {
   through: UserTravel,
-  as: "Travels",
+  as: "travels",
   onDelete: "CASCADE",
   foreignKey: { name: "id_usuario" }
 });
 Travel.belongsToMany(User, {
   through: UserTravel,
-  as: "Users",
+  as: "users",
   onDelete: "CASCADE",
   foreignKey: { name: "id_viagem" }
 });

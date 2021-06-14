@@ -23,21 +23,21 @@ export async function seedDatabase() {
       email: "teste@teste.com",
       dt_nascimento: new Date(),
       email_verificado: true,
-      id_firebase: "asdf",
+      senha: "12345678"
     },
     {
       nome_usuario: "Teste 2",
       email: "teste2@teste.com",
       dt_nascimento: new Date(),
       email_verificado: true,
-      id_firebase: "teste2",
+      senha: "12345678"
     },
     {
       nome_usuario: "Teste 3",
       email: "teste3@teste.com",
       dt_nascimento: new Date(),
       email_verificado: true,
-      id_firebase: "teste3",
+      senha: "12345678"
     },
   ];
 

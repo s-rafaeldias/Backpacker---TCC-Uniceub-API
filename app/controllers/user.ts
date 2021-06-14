@@ -1,25 +1,27 @@
+import admin from "firebase-admin";
 import { createUser, updateUser, getUser, deleteUser } from "../services/user";
 import { Request, Response } from "express";
-import { UniqueConstraintError, ValidationError } from "sequelize";
+import {
+  UniqueConstraintError,
+  ValidationError,
+  DatabaseError,
+} from "sequelize";
 import { UserCreationAttributes } from "../models/user";
-
-import * as admin from "firebase-admin";
 
 const UserController = {
   create: async (req: Request, res: Response) => {
     try {
-      let user: UserCreationAttributes = {
+      let userData: UserCreationAttributes = {
         email: req.body.email,
         nome_usuario: req.body.nome,
         dt_nascimento: req.body.dt_nascimento,
         id_firebase: req.body.id_firebase,
+        senha: req.body.senha,
       };
 
-      await createUser(user);
-      return res.sendStatus(201);
+      let user = await createUser(userData);
+      return res.status(201).json(user);
     } catch (err) {
-      console.log(err);
-
       if (err instanceof UniqueConstraintError) {
         return res.status(400).json({
           message: "Campo chave duplicado",
@@ -29,6 +31,16 @@ const UserController = {
         return res.status(400).json({
           message: err.message,
           status: "Failure",
+        });
+      } else if (err.code === "auth/email-already-exists") {
+        return res.status(400).json({
+          message: "Email ja cadastrado",
+          status: err.code,
+        });
+      } else if (err instanceof DatabaseError) {
+        return res.status(400).json({
+          message: "Erro ao cadastrar no banco",
+          status: err.original.message,
         });
       }
 
@@ -41,21 +53,13 @@ const UserController = {
 
   update: async (req: Request, res: Response) => {
     try {
-      // TODO: colocar isso em uma lib
-      let token = req.headers.authorization || "";
-      let decodeToken = await admin.auth().verifyIdToken(token);
-
+      let userToUpdate = req.params.id_firebase;
       let payload = req.body;
 
-      await updateUser(decodeToken.uid, payload);
+      await updateUser(userToUpdate, payload);
 
-      return res.status(200).json({
-        message: "Updated.",
-        status: "Success",
-      });
+      return res.sendStatus(200);
     } catch (err) {
-      console.log(err);
-
       return res.status(500).json({
         message: "Incorrect",
         status: "Failure",
@@ -65,10 +69,7 @@ const UserController = {
 
   getDetail: async (req: Request, res: Response) => {
     try {
-      // TODO: colocar isso em uma lib
-      let token = req.headers.authorization || "";
-      let decodeToken = await admin.auth().verifyIdToken(token);
-      let user = await getUser(decodeToken.uid);
+      let user = await getUser(req.params.id_firebase);
 
       if (user) {
         return res.status(200).json(user.get());
@@ -78,8 +79,6 @@ const UserController = {
         message: "Not Found",
       });
     } catch (err) {
-      console.log(err);
-
       return res.status(500).json({
         message: "Bad Request",
       });
@@ -87,22 +86,17 @@ const UserController = {
   },
 
   delete: async (req: Request, res: Response) => {
-    // TODO: colocar isso em uma lib
-    let token = req.headers.authorization || "";
-    let decodeToken = await admin.auth().verifyIdToken(token);
-
+    let idFirebase = req.params.id_firebase;
     let softDelete = req.body.soft_delete;
 
     try {
-      await deleteUser(decodeToken.uid, softDelete);
+      await deleteUser(idFirebase, softDelete);
 
       return res.status(200).json({
         message: "Apagado",
         status: "Success",
       });
     } catch (err) {
-      console.log(err);
-
       return res.status(500).json({
         message: "Bad Request",
       });
