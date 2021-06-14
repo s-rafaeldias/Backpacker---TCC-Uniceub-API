@@ -24,8 +24,7 @@ export async function getUsersFromTravel(id_viagem: string) {
 }
 
 export async function deleteUserTravel(id_viagem: string, id_usuario: string) {
-
-  let travel = await Travel.findByPk(id_viagem, { include: ["users"] });
+  let travel = await Travel.findByPk(id_viagem);
 
   // @ts-ignore
   return await travel.removeUser(id_usuario);
