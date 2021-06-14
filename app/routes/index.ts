@@ -3,6 +3,7 @@ import express from "express";
 import userRoutes from "./user";
 import travelRoutes from "./travel";
 import spotRoutes from "./spot";
+import documentRoutes from './document'
 import expenseRoutes from "./expense";
 
 
@@ -10,6 +11,7 @@ export const routingMiddleWare = (app) => {
   app.use("/user", userRoutes);
   app.use("/travel", travelRoutes);
   app.use("/spot", spotRoutes);
+  app.use('/document', documentRoutes)
   app.use("/expense", expenseRoutes);
 
   // app.use("/viagem", viagem(router));
