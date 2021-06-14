@@ -2,7 +2,8 @@ export default  {
   HOST: "localhost",
   USER: "root",
   PASSWORD: "",
-  DB: process.env.ENV === "DEV"? "backpack_dev" : "backpack",
+  port: process.env.DB_PORT ? parseInt(process.env.DB_PORT) : 3306,
+  DB: process.env.ENV === "TEST" ? "backpack_dev" : "backpack",
   dialect: "mysql",
   pool: {
     max: 5,

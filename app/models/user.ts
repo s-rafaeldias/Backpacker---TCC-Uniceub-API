@@ -6,6 +6,8 @@ import {
   Association,
   HasManyGetAssociationsMixin,
   HasManyAddAssociationMixin,
+  BelongsToManyAddAssociationMixin,
+  BelongsToManyGetAssociationsMixin,
 } from "sequelize";
 
 import { TravelModel } from "./travel";
@@ -37,7 +39,11 @@ export interface UserCreationAttributes
     | "ts_ultimo_login"
     | "ts_cadastro"
     | "ts_alteracao_perfil"
-  > {}
+    | "id_firebase"
+    | "dt_nascimento"
+    > {
+      senha: string
+    }
 
 export class UserModel extends Model<UserAttributes, UserCreationAttributes>
   implements UserAttributes {
@@ -56,11 +62,9 @@ export class UserModel extends Model<UserAttributes, UserCreationAttributes>
   public ts_alteracao_perfil!: Date;
 
   //
-  public addTravel!: HasManyAddAssociationMixin<TravelModel, number>;
+  public addTravel!: BelongsToManyAddAssociationMixin<TravelModel, number>;
+  public getTravels!: BelongsToManyGetAssociationsMixin<TravelModel>;
 
-  // public static associations: {
-    // travels: Association<UserModel, TravelModel>,
-  // }
 
   public ownsTravel(): boolean {
     return true;

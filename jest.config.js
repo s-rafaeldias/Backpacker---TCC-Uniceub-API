@@ -7,7 +7,18 @@ module.exports = {
   globals: {
     "ts-jest": {
       isolatedModules: true,
-      tsconfig: "./tsconfig.json"
+      tsconfig: "./tsconfig.json",
     },
   },
+  setupFiles: ["./app/__tests__/setup.ts"],
+  setupFilesAfterEnv: ["<rootDir>/app/__tests__/jest.setup.ts"],
+  globalSetup: "./app/__tests__/setup.ts",
+  globalTeardown: "./app/__tests__/teardown.ts",
+  testPathIgnorePatterns: [
+    "/node_modules/",
+    "/dist/",
+    "<rootDir>/app/__tests__/setup.ts",
+    "<rootDir>/app/__tests__/teardown.ts",
+    "<rootDir>/app/__tests__/jest.setup.ts",
+  ],
 };

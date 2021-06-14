@@ -5,10 +5,10 @@ import { Router } from "express";
 
 const router = Router();
 
-router.post("/new", SpotController.create);
-router.get("/", SpotController.getSpots);
-router.get("/:id_local", SpotController.getDetail);
-router.put("/:id_local", SpotController.update);
-router.delete("/:id_local", SpotController.delete);
+router.post("/new", verifyToken, SpotController.create);
+router.get("/", verifyToken, SpotController.getSpots);
+router.get("/:id_local", verifyToken, SpotController.getDetail);
+router.put("/:id_local", verifyToken, SpotController.update);
+router.delete("/:id_local", verifyToken, SpotController.delete);
 
 export = router;

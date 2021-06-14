@@ -1,0 +1,92 @@
+{
+  "configurations": {
+    "attach": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "attach",
+        "type": "node",
+        "address": "localhost",
+        "port": 9229,
+        "protocol": "inspect",
+        "stopOnEntry": true,
+        "preLaunchTask": "npm build",
+        "console": "integratedTerminal",
+        "program": "${workspaceRoot}/server.ts",
+        "cwd": "${workspaceRoot}",
+        "restart": true,
+        "stopOnEntry": true,
+        "smartSteps": true,
+        "sourceMaps": true,
+        "outFiles": [
+            "${workspaceRoot}/dist/**/*.js"
+        ],
+        "skipFiles": ["<node_internals>/**"]
+      }
+    },
+
+    "Test all": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "launch",
+        "protocol": "inspector",
+        "type": "node",
+        "port": 9229,
+        "smartSteps": true,
+        "runtimeArgs": [
+          "--inspect-brk",
+          "${workspaceRoot}/node_modules/.bin/jest",
+          "--runInBand",
+          "--silent",
+          "--detectOpenHandles",
+          "--forceExit"
+        ],
+        "env": {
+            "FIREBASE_AUTH_EMULATOR_HOST": "localhost:9099",
+            "ENV": "TEST",
+            "DEBUG": 1
+        },
+        "console": "integratedTerminal",
+        "cwd": "${workspaceRoot}",
+        "skipFiles": [
+          "<node_internals>/**/*.js",
+          "${workspaceRoot}/node_modules/**/*.js",
+          "inspector_async_hook.js",
+          "async_hooks.js"
+        ]
+      }
+    },
+
+    "Test current file": {
+      "adapter": "vscode-node",
+      "configuration": {
+        "request": "launch",
+        "protocol": "inspector",
+        "type": "node",
+        "port": 9229,
+        "smartSteps": true,
+        "sourceMaps": true,
+        "runtimeArgs": [
+          "--inspect-brk",
+          "${workspaceRoot}/node_modules/.bin/jest",
+          "${fileBasenameNoExtension}",
+          "--runInBand",
+          "--detectOpenHandles",
+          "--forceExit"
+        ],
+        "env": {
+            "FIREBASE_AUTH_EMULATOR_HOST": "localhost:9099",
+            "ENV": "TEST",
+            "DEBUG": 1
+        },
+        "console": "integratedTerminal",
+        "cwd": "${workspaceRoot}",
+        "skipFiles": [
+          "<node_internals>/**/*.js",
+          "${workspaceRoot}/node_modules/**/*.js",
+          "inspector_async_hook",
+          "async_hooks"
+        ]
+      }
+    }
+  }
+}

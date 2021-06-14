@@ -4,7 +4,8 @@ import TravelModel from "./travel";
 import UserTravelModel from "./user_travel";
 import SpotModel from "./spot";
 import DocumentModel from "./document";
-import DocumentCategoryModel from "./document_category"
+import DocumentCategoryModel from "./document_category";
+import ExpenseModel from "./expense";
 import { Sequelize } from "sequelize";
 
 export let sequelize: Sequelize;
@@ -13,7 +14,8 @@ if (!process.env.CLEARDB_DATABASE_URL) {
   sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
     host: cfg.HOST,
     dialect: "mysql",
-    logging: process.env.ENV === "TEST",
+    logging: true,
+    port: cfg.port,
 
     pool: {
       max: cfg.pool.max,
@@ -25,51 +27,49 @@ if (!process.env.CLEARDB_DATABASE_URL) {
 } else {
   sequelize = new Sequelize(process.env.CLEARDB_DATABASE_URL!);
 }
-// export const sequelize = new Sequelize(cfg.DB, cfg.USER, cfg.PASSWORD, {
-    // host: cfg.HOST,
-    // dialect: "mysql",
-    // logging: process.env.ENV === "TEST",
-
-    // pool: {
-      // max: cfg.pool.max,
-      // min: cfg.pool.min,
-      // acquire: cfg.pool.acquire,
-      // idle: cfg.pool.idle,
-    // },
-  // });
 
 const User = UserModel(sequelize);
 const Travel = TravelModel(sequelize);
 const UserTravel = UserTravelModel(sequelize);
 const Spot = SpotModel(sequelize);
-const DocumentCategory = DocumentCategoryModel(sequelize)
+const DocumentCategory = DocumentCategoryModel(sequelize);
 const Document = DocumentModel(sequelize);
+const Expense = ExpenseModel(sequelize);
 
 User.belongsToMany(Travel, {
   through: UserTravel,
-  as: "Travel",
+  as: "travels",
   onDelete: "CASCADE",
-  foreignKey: "id_usuario",
-  otherKey: "id_viagem",
+  foreignKey: { name: "id_usuario" },
 });
-
 Travel.belongsToMany(User, {
   through: UserTravel,
-  as: "User",
+  as: "users",
   onDelete: "CASCADE",
-  foreignKey: "id_viagem",
-  otherKey: "id_usuario",
+  foreignKey: { name: "id_viagem" },
 });
 
 Travel.hasMany(Spot, {
-  as: "Spot",
-  onDelete: "CASCADE",
-});
-
-Spot.belongsTo(Travel, {
-  as: "Travel",
+  as: "spots",
   onDelete: "CASCADE",
   foreignKey: "id_viagem",
+  sourceKey: "id_viagem",
+});
+Spot.belongsTo(Travel, {
+  as: "travel",
+  foreignKey: "id_viagem",
+  targetKey: "id_viagem",
+});
+
+Travel.hasMany(Expense, {
+  as: "expenses",
+  onDelete: "CASCADE",
+  foreignKey: "id_viagem",
+  sourceKey: "id_viagem",
+});
+Expense.belongsTo(Travel, {
+  foreignKey: "id_viagem",
+  targetKey: "id_viagem",
 });
 
 Travel.hasMany(Document, {
@@ -77,25 +77,22 @@ Travel.hasMany(Document, {
   onDelete: "CASCADE",
 });
 
-Document.belongsTo(Travel,{
+Document.belongsTo(Travel, {
   as: "Travel",
   onDelete: "CASCADE",
   foreignKey: "id_viagem",
-})
+});
 
 DocumentCategory.hasMany(Document, {
   as: "Document",
   onDelete: "CASCADE",
 });
 
-Document.belongsTo(DocumentCategory,{
+Document.belongsTo(DocumentCategory, {
   as: "DocumentCategory",
   onDelete: "CASCADE",
   foreignKey: "id_categoria_documento",
-})
+});
 
-
-
-
-export { User, Travel, UserTravel, Spot, Document, DocumentCategory };
+export { User, Travel, UserTravel, Spot, Expense, Document, DocumentCategory };
 export default sequelize;

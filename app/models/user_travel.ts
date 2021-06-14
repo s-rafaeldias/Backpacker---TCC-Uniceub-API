@@ -1,7 +1,7 @@
 import { Sequelize, Model, DataTypes } from "sequelize";
 
 export interface UserTravelAttributes {
-  id_usuario_viagem: number;
+  id_usuario_viagem?: number;
   id_usuario: number;
   id_viagem: number;
 }
