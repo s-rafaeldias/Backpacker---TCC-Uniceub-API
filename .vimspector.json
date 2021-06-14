@@ -48,8 +48,10 @@
         "console": "integratedTerminal",
         "cwd": "${workspaceRoot}",
         "skipFiles": [
-          "_vimspector_tmp/<node_internals>/**",
-          "${workspaceRoot}/node_modules/**/*.js"
+          "<node_internals>/**/*.js",
+          "${workspaceRoot}/node_modules/**/*.js",
+          "inspector_async_hook.js",
+          "async_hooks.js"
         ]
       }
     },
@@ -62,6 +64,7 @@
         "type": "node",
         "port": 9229,
         "smartSteps": true,
+        "sourceMaps": true,
         "runtimeArgs": [
           "--inspect-brk",
           "${workspaceRoot}/node_modules/.bin/jest",
@@ -78,8 +81,10 @@
         "console": "integratedTerminal",
         "cwd": "${workspaceRoot}",
         "skipFiles": [
-          "_vimspector_tmp/<node_internals>/**",
-          "${workspaceRoot}/node_modules/**/*.js"
+          "<node_internals>/**/*.js",
+          "${workspaceRoot}/node_modules/**/*.js",
+          "inspector_async_hook",
+          "async_hooks"
         ]
       }
     }
