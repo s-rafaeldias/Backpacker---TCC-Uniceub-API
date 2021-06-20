@@ -1,4 +1,4 @@
-import { User, Travel, UserTravel, Expense, Spot } from "./index";
+import { User, Travel, UserTravel, Expense, Spot, Document } from "./index";
 import { UserCreationAttributes } from "./user";
 import admin from "firebase-admin";
 
@@ -133,6 +133,24 @@ export async function seedDatabase() {
       dt_planejada: new Date(),
       visitado: true,
       id_viagem: 2
+    },
+  ]);
+
+  await Document.bulkCreate([
+    {
+      nome_documento: "Teste 1",
+      descricao: "balbdlafaskdfas",
+      id_viagem: 1
+    },
+    {
+      nome_documento: "Teste 2",
+      descricao: "balbdlafaskdfas",
+      id_viagem: 1
+    },
+    {
+      nome_documento: "Teste 3",
+      descricao: "balbdlafaskdfas",
+      id_viagem: 1
     },
   ])
 }

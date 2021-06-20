@@ -13,10 +13,12 @@ const DocumentController = {
   create: async (req: Request, res: Response) => {
     try {
       let document: DocumentCreationAttributes = {
+        id_viagem: req.body.id_viagem,
         nome_documento: req.body.nome_documento,
+        descricao: req.body.descricao,
         imagem_path: req.body.imagem_path,
       };
-      await createDocument(document, req);
+      await createDocument(document);
       return res.sendStatus(201);
     } catch (err) {
       console.log(err);
@@ -63,7 +65,8 @@ const DocumentController = {
 
   getDocuments: async (req: Request, res: Response) => {
     try {
-      let { id_viagem } = req.body.id_viagem;
+      let id_viagem = req.query.id_viagem as string;
+
       let document = await getAllDocument(id_viagem);
 
       if (document) {

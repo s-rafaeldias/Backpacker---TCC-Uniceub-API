@@ -1,20 +1,16 @@
 import { Request } from "express";
-import admin from "firebase-admin";
-
-import { convertTimeStampToDate } from "../helper/convertDate";
 import { Document } from "../models";
-import { DocumentCategory } from "../models";
 import { DocumentCreationAttributes } from "../models/document";
 
-export async function createDocument(document: DocumentCreationAttributes, req: Request) {
-	let { nome_categoria } = req.body;
+export async function createDocument(document: DocumentCreationAttributes) {
+	// let { nome_categoria } = req.body;
 	
-	let categoria_doc = await DocumentCategory.findOne({ where: {nome_categoria: nome_categoria} })
+	// let categoria_doc = await DocumentCategory.findOne({ where: {nome_categoria: nome_categoria} })
 
-	if (!categoria_doc){
-		categoria_doc = await DocumentCategory.create({nome_categoria: nome_categoria})
-	}
-	document.id_categoria_documento = categoria_doc.id_categoria_documento
+	// if (!categoria_doc){
+		// categoria_doc = await DocumentCategory.create({nome_categoria: nome_categoria})
+	// }
+	// document.id_categoria_documento = categoria_doc.id_categoria_documento
 	return await Document.create(document);
 }
 
