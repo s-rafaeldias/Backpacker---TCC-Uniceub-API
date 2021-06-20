@@ -60,14 +60,14 @@ export default function(sequelize: Sequelize) {
         },
         allowNull: false,
       },
-      id_categoria_documento: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "CATEGORIA_DOCUMENTO",
-          key: "id_categoria_documento",
-        },
-        allowNull: true,
-      },
+      // id_categoria_documento: {
+      //   type: DataTypes.INTEGER,
+      //   references: {
+      //     model: "CATEGORIA_DOCUMENTO",
+      //     key: "id_categoria_documento",
+      //   },
+      //   allowNull: true,
+      // },
       nome_documento: {
         type: DataTypes.TEXT,
         allowNull: false,
