@@ -16,7 +16,7 @@ const UserController = {
         nome_usuario: req.body.nome,
         dt_nascimento: req.body.dt_nascimento,
         id_firebase: req.body.id_firebase,
-        senha: req.body.senha,
+        senha: req.body.password,
       };
 
       let user = await createUser(userData);

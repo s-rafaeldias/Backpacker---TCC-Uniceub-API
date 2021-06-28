@@ -15,7 +15,15 @@ export async function createUser(userData: UserCreationAttributes) {
   userData.dt_nascimento = convertTimeStampToDate(userData.dt_nascimento);
   userData.id_firebase = firebaseUser.uid;
 
-  return await User.create(userData);
+  try {
+    let user = await User.create(userData);
+    return user;
+  } catch (err) {
+    if (err.code === "auth/email-already-exists") {
+      await admin.auth().deleteUser(firebaseUser.uid);
+    }
+    throw err;
+  };
 }
 
 export async function updateUser(id_firebase: string, payload) {
