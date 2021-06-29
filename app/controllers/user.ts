@@ -22,6 +22,7 @@ const UserController = {
       let user = await createUser(userData);
       return res.status(201).json(user);
     } catch (err) {
+      console.log(err);
       if (err instanceof UniqueConstraintError) {
         return res.status(400).json({
           message: "Campo chave duplicado",
