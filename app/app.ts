@@ -21,6 +21,7 @@ if (process.env.ENV === "DEV" || process.env.ENV === "TEST") {
 } else {
   if (!admin.apps.length) {
     admin.initializeApp(firebaseConfig);
+    console.log("Firebase is on!");
   }
 }
 
