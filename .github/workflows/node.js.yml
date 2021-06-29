@@ -44,4 +44,4 @@ jobs:
       env:
         ENV: TEST
         DB_PORT: ${{ job.services.mysql.ports['3306'] }}
-        FIREBASE_KEY_API: AIzaSyC9bmfTTm7kPJnOHIXdC9da7WE5sRIVrHI
+        FIREBASE_API_KEY: AIzaSyC9bmfTTm7kPJnOHIXdC9da7WE5sRIVrHI
