@@ -29,8 +29,8 @@ export async function updateSpot(id_local: string, payload) {
     let travel = await spot.getTravel();
     if (travel && spot) {
       if (
-        (spot.dt_planejada > travel.dt_fim ||
-          spot.dt_planejada < travel.dt_inicio)
+        (payload.dt_planejada > travel.dt_fim ||
+          payload.dt_planejada < travel.dt_inicio)
       ) {
         throw new ValidationError("Data invalida");
       }
