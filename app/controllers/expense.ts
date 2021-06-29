@@ -18,6 +18,7 @@ const ExpenseController = {
         dt_gasto: req.body.dt_gasto,
         valor_gasto: req.body.valor_gasto,
         descricao_gasto: req.body.descricao_gasto,
+        link_imagem_gasto: req.body.link_imagem_gasto,
       };
       await createExpense(expense);
       return res.sendStatus(201);
