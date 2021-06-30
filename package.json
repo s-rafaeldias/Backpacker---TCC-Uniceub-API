@@ -8,7 +8,9 @@
     "postinstall": "npx tsc",
     "build": "npx tsc",
     "start:dev": "npx cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:9099\" ENV=DEV npx nodemon --inspect=9229 dist/server.js",
+    "start:prod": "npx nodemon dist/server.js",
     "build:dev": "npx cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:9099\" ENV=DEV npx tsc --watch",
+    "build:prod": "npx tsc --watch",
     "firebase:dev": "npx firebase emulators:start",
     "dev": "npx cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:9099\" ENV=DEV npx concurrently 'npm:build:dev' 'npm:start:dev'",
     "test": "npx cross-env FIREBASE_AUTH_EMULATOR_HOST=\"localhost:9099\" ENV=TEST npx jest --silent -runInBand --detectOpenHandles --forceExit --collectCoverage"
